@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 function milliDisplay(s) {
 	function pad(n) {
@@ -73,13 +73,9 @@ class Timer extends Component {
 
 	render() {
 		return (
-			<Card>
-				<CardContent>
-					<Typography variant="h1" align="center" component="h1">
-						{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
-					</Typography>
-				</CardContent>
-			</Card>
+			<Typography variant="h1" align="center" component="h1">
+				{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
+			</Typography>
 		);
 	}
 }
