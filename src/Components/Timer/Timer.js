@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
 import { Card, CardContent, Typography } from "@material-ui/core";
 
-function milliDisplay(time) {
-	let milliseconds = parseInt((time%1000)/10)
-		, seconds = parseInt((time/1000)%60)
-		, minutes = parseInt((time/(1000*60))%60)
-		, hours = parseInt((time/(1000*60*60))%24);
+function milliDisplay(s) {
+	function pad(n) {
+		n = n.toString();
+		n = n.substr(0, 2);
+		return ('00' + n).slice(-2);
+	}
 
-	hours = (hours < 10) ? '0' + hours : hours;
-	minutes = (minutes < 10) ? '0' + minutes : minutes;
+	const ms = s % 1000;
+	s = (s - ms) / 1000;
+	const secs = s % 60;
+	s = (s - secs) / 60;
+	const mins = s % 60;
+	const hrs = (s - mins) / 60;
 
-	milliseconds = milliseconds.toString();
-	while (milliseconds.length < 2) milliseconds += '0';
+	let timestring = [];
 
-	console.log(hours);
-	console.log(minutes);
-	console.log(seconds);
+	if (hrs > 0) timestring.push(pad(hrs));
+	if (mins > 0) timestring.push(pad(mins));
+	timestring.push(`${mins > 0 ? pad(secs) : secs}.${pad(Math.floor(ms / 10))}`);
 
-	return `
-	${hours === '00' ? '' : `${hours}:`
-	}${minutes === '00' ? '' : `${minutes}:`
-	}${seconds
-	}.${milliseconds}
-	`;
+	return timestring.join(':');
 }
 
 class Timer extends Component {
@@ -39,13 +38,12 @@ class Timer extends Component {
 	}
 
 	start() {
-		this.setState({ lastTick: +new Date(), firstTick: +new Date() });
-		setTimeout(() => this.tick(), 10)
+		this.setState({ lastTick: Date.now(), firstTick: Date.now() });
+		setInterval(() => this.tick(), 10)
 	}
 
 	tick() {
-		this.setState({ lastTick: +new Date() });
-		setTimeout(() => this.tick(), 10)
+		this.setState({ lastTick: Date.now() });
 	}
 
 	render() {
