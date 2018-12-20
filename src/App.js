@@ -12,7 +12,7 @@ const styles = theme => ({
 		padding: `${theme.spacing.unit * 11}px 0 ${theme.spacing.unit * 6}px`,
 	},
 	timerContainer: {
-		padding: `${theme.spacing.unit * 5}px 0 ${theme.spacing.unit * 6}px`,
+		padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 6}px`,
 	},
 	chip: {
 		fontSize: '150%',

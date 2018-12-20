@@ -30,22 +30,29 @@ class Timer extends Component {
 		this.state = {
 			lastTick: null,
 			firstTick: null,
+			status: 'normal', // Can be: normal, willStart, didStop
 		};
 		this.timer = null;
-		this.isStopUp = false;
 	}
 
 	keyDown = e => {
-		if (e.keyCode !== 32 || !this.timer) return;
+		if (e.keyCode !== 32) return;
+		// If the timer is not started in normal then we'll begin to start it again
+		if (!this.timer && this.state.status !== 'didStop') {
+			this.setState({ status: 'willStart' });
+			return;
+		}
+		// The timer can only stop from the normal state
+		if (this.state.status !== 'normal') return;
 		this.stop();
 		this.props.beginScramble();
-		this.isStopUp = true;
+		this.setState({ status: 'didStop' });
 	};
 
 	keyUp = e => {
 		if (e.keyCode !== 32 || this.timer) return;
-		if (this.isStopUp) this.isStopUp = false;
-		else this.start();
+		if (this.state.status === 'didStop') this.setState({ status: 'normal' });
+		else if (this.state.status === 'willStart') this.start();
 	};
 
 	componentDidMount() {
@@ -58,6 +65,7 @@ class Timer extends Component {
 	}
 
 	start() {
+		this.setState({ status: 'normal' });
 		this.setState({ lastTick: Date.now(), firstTick: Date.now() });
 		this.timer = setInterval(() => this.tick(), 10);
 	}
@@ -72,8 +80,10 @@ class Timer extends Component {
 	}
 
 	render() {
+		const color = this.state.status === 'didStop' ? 'secondary' :
+			this.state.status === 'willStart' ? 'primary' : 'textPrimary';
 		return (
-			<Typography variant="h1" align="center" component="h1">
+			<Typography variant="h1" color={color} align="center" component="h1">
 				{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
 			</Typography>
 		);
