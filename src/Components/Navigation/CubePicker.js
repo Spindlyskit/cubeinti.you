@@ -1,5 +1,5 @@
-import {MenuItem, Select} from "@material-ui/core";
-import React from "react";
+import { MenuItem, Select } from '@material-ui/core';
+import React from 'react';
 
 function CubePicker(props) {
 	const { classes } = props;
@@ -19,7 +19,7 @@ function CubePicker(props) {
 		<MenuItem value="444">4x4 Cube</MenuItem>
 		<MenuItem value="555">5x5 Cube</MenuItem>
 		<MenuItem value="skewb">Skewb</MenuItem>
-	</Select>
+	</Select>;
 }
 
 export default CubePicker;

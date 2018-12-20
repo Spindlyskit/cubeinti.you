@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Chip } from "@material-ui/core";
+import { Typography, Chip } from '@material-ui/core';
 
 class ScrambleChip extends Component {
 	render() {
