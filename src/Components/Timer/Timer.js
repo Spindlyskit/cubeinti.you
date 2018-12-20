@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from '@material-ui/core';
 
 function milliDisplay(s) {
 	function pad(n) {
 		n = n.toString();
 		n = n.substr(0, 2);
-		return ('00' + n).slice(-2);
+		return `00${n}`.slice(-2);
 	}
 
 	const ms = s % 1000;
@@ -31,15 +31,40 @@ class Timer extends Component {
 			lastTick: null,
 			firstTick: null,
 		};
+		this.timer = null;
+		this.isStopUp = false;
 	}
 
+	keyDown = e => {
+		if (e.keyCode !== 32 || !this.timer) return;
+		this.stop();
+		this.props.beginScramble();
+		this.isStopUp = true;
+	};
+
+	keyUp = e => {
+		if (e.keyCode !== 32 || this.timer) return;
+		if (this.isStopUp) this.isStopUp = false;
+		else this.start();
+	};
+
 	componentDidMount() {
-		this.start();
+		document.addEventListener('keydown', this.keyDown, false);
+		document.addEventListener('keyup', this.keyUp, false);
+	}
+
+	componentWillUnmount() {
+		if (this.timer) clearInterval(this.timer);
 	}
 
 	start() {
 		this.setState({ lastTick: Date.now(), firstTick: Date.now() });
-		setInterval(() => this.tick(), 10)
+		this.timer = setInterval(() => this.tick(), 10);
+	}
+
+	stop() {
+		clearInterval(this.timer);
+		this.timer = null;
 	}
 
 	tick() {

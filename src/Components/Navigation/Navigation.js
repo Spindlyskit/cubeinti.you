@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
-import CubePicker from "./CubePicker";
+import CubePicker from './CubePicker';
 
 // Custom styles for right align and select coloration.
 const styles = {

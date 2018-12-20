@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Navigation from './Components/Navigation/Navigation';
 import Timer from './Components/Timer/Timer';
-import { withStyles } from "@material-ui/core/styles";
-import ScrambleChip from "./Components/Timer/ScrambleChip";
+import { withStyles } from '@material-ui/core/styles';
+import ScrambleChip from './Components/Timer/ScrambleChip';
 import Scrambo from 'scrambo';
 
 const styles = theme => ({
@@ -15,7 +15,7 @@ const styles = theme => ({
 		padding: `${theme.spacing.unit * 5}px 0 ${theme.spacing.unit * 6}px`,
 	},
 	chip: {
-		fontSize: "150%",
+		fontSize: '150%',
 	},
 });
 
@@ -40,10 +40,9 @@ class App extends Component {
 	beginScramble = () => {
 		const newScramble = this.scrambler.type(this.state.cube).get(1);
 		this.setState({ scramble: newScramble });
+	};
 
-	}
-
-	updateCube = (newValue) => {
+	updateCube = newValue => {
 		this.setState({ cube: newValue });
 		this.beginScramble();
 	};
@@ -55,13 +54,14 @@ class App extends Component {
 				<Navigation updateCube={this.updateCube} cube={this.state.cube} />
 				<div className={classes.toolbar} />
 				<main className={classes.main}>
-					<ScrambleChip classes={classes} onClick={this.beginScramble} scramble={this.state.scramble || 'Scrambling...'} />
+					<ScrambleChip classes={classes} onClick={this.beginScramble}
+						scramble={this.state.scramble || 'Scrambling...'} />
 					<div className={classes.timerContainer}>
-						<Timer></Timer>
+						<Timer beginScramble={this.beginScramble} />
 					</div>
 				</main>
 			</div>
-		)
+		);
 	}
 }
 
