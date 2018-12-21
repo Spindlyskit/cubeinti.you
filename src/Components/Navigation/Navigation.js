@@ -1,7 +1,10 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { UserContext } from '../../UserContext';
 import CubePicker from './CubePicker';
+import LoginButton from './LoginButton';
+import UserDisplay from './UserDisplay';
 
 // Custom styles for right align and select coloration.
 const styles = {
@@ -34,7 +37,11 @@ function Navigation(props) {
 					<Typography variant="h6" color="inherit" className={classes.grow}>
 						<CubePicker classes={classes} cube={props.cube} updateCube={props.updateCube} />
 					</Typography>
-					<Button color="inherit">Login</Button>
+					<UserContext.Consumer>
+						{({ user }) =>
+							user ? <UserDisplay user={user} /> : <LoginButton />
+						}
+					</UserContext.Consumer>
 				</Toolbar>
 			</AppBar>
 		</div>
