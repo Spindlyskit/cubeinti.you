@@ -38,8 +38,9 @@ function Navigation(props) {
 						<CubePicker classes={classes} cube={props.cube} updateCube={props.updateCube} />
 					</Typography>
 					<UserContext.Consumer>
-						{({ user }) =>
-							user ? <UserDisplay user={user} /> : <LoginButton />
+						{({ user, firebase }) =>
+							user ? <UserDisplay user={user} firebase={firebase} /> :
+								<LoginButton/>
 						}
 					</UserContext.Consumer>
 				</Toolbar>

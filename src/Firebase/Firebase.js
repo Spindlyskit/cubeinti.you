@@ -18,6 +18,8 @@ class Firebase {
 		const result = await this.app.auth().signInWithPopup(this.googleProvider);
 		return result;
 	};
+
+	signOut = () => this.app.auth().signOut();
 }
 
 export default Firebase;

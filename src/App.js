@@ -62,7 +62,7 @@ class App extends Component {
 		const { classes } = this.props;
 		return (
 			<FirebaseContext.Provider value={this.firebase}>
-				<UserContext.Provider value={{ user: this.state.user, token: this.token }}>
+				<UserContext.Provider value={{ user: this.state.user, token: this.token, firebase: this.firebase }}>
 					<div className="App">
 						<Navigation updateCube={this.updateCube} cube={this.state.cube} />
 						<div className={classes.toolbar} />

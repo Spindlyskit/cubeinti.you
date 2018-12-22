@@ -46,7 +46,7 @@ class UserDisplay extends Component {
 					open={Boolean(this.state.anchorEl)}
 					onClose={this.handleClose}
 				>
-					<MenuItem onClick={this.handleClose}>Logout</MenuItem>
+					<MenuItem onClick={this.props.firebase.signOut}>Logout</MenuItem>
 					<MenuItem onClick={this.handleClose}>My account</MenuItem>
 				</Menu>
 			</div>
