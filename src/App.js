@@ -62,6 +62,18 @@ class App extends Component {
 		this.beginScramble();
 	};
 
+	addTime = time => {
+		this.firebase.addTime(this.state.user.uid, {
+			time: time,
+			type: this.state.cube,
+			subtype: 'normal',
+			scramble: this.state.scramble[0],
+			penalty: 0,
+			created: +Date.now(),
+			archived: false,
+		});
+	};
+
 	render() {
 		const { classes } = this.props;
 		return (
@@ -74,7 +86,7 @@ class App extends Component {
 							<ScrambleChip classes={classes} onClick={this.beginScramble}
 								scramble={this.state.scramble || 'Scrambling...'} />
 							<div className={classes.timerContainer}>
-								<Timer beginScramble={this.beginScramble} />
+								<Timer beginScramble={this.beginScramble} addTime={this.addTime} />
 							</div>
 						</main>
 					</div>

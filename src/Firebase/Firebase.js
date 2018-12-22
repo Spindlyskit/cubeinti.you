@@ -1,7 +1,21 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import { config } from './auth';
 import EventEmitter from 'events';
+
+/*
+Times should look like this:
+{
+	time: number, // in milliseconds
+	type: string, // the puzzle, eg 333, 444, pyram, etc. Should match up with the Tnoodle puzzle id
+	subtype: string, // eg 'normal', 'one-handed', 'bld'
+	scramble: string,
+	penalty: number, // index from [none, +2, dnf]
+	created: timestamp,
+	archived: boolean, //whether the user has archived this solve or not. Used in queries.
+}
+ */
 
 class Firebase extends EventEmitter {
 	constructor() {
@@ -26,6 +40,14 @@ class Firebase extends EventEmitter {
 		const result = await this.app.auth().signOut();
 		this.emit('signOut', result);
 		return result;
+	};
+
+	addTime = (userId, timeObject) => {
+		const db = this.app.firestore();
+		db.settings({
+			timestampsInSnapshots: true,
+		});
+		db.collection(`users/${userId}/times`).add(timeObject);
 	};
 }
 

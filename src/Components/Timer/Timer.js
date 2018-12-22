@@ -86,6 +86,8 @@ class Timer extends Component {
 	stop() {
 		clearInterval(this.timer);
 		this.timer = null;
+
+		this.props.addTime(this.state.lastTick - this.state.firstTick);
 	}
 
 	tick() {
