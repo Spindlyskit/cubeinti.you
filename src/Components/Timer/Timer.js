@@ -1,5 +1,18 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+	green: {
+		color: '#76FF03',
+	},
+	red: {
+		color: '#F44336',
+	},
+	black: {
+		color: '#000',
+	},
+};
 
 function milliDisplay(s) {
 	function pad(n) {
@@ -80,14 +93,15 @@ class Timer extends Component {
 	}
 
 	render() {
-		const color = this.state.status === 'didStop' ? 'secondary' :
-			this.state.status === 'willStart' ? 'primary' : 'textPrimary';
+		const className = this.state.status === 'didStop' ? 'red' :
+			this.state.status === 'willStart' ? 'green' : 'black';
 		return (
-			<Typography variant="h1" color={color} align="center" component="h1">
+			<Typography variant="h1" className={this.props.classes[className]} align="center" component="h1">
 				{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
 			</Typography>
 		);
 	}
 }
 
-export default Timer;
+export default withStyles(styles)(Timer);
+
