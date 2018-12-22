@@ -32,12 +32,12 @@ class App extends Component {
 		};
 		this.firebase = new Firebase();
 		this.token = null;
-		this.firebase.updateUser = async result => {
+		this.firebase.on('signIn', async result => {
 			result = await result;
 			console.log(result);
 			this.setState({ user: result.user });
 			this.token = result.credential.accessToken;
-		};
+		});
 		this.worker = null;
 		this.scrambler = new Scrambo();
 	}

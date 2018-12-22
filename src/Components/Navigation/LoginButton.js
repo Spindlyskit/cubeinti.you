@@ -6,7 +6,7 @@ function LoginButton() {
 	return (
 		<FirebaseContext.Consumer>
 			{firebase =>
-				<Button onClick={() => firebase.updateUser(firebase.signInPopup())} color="inherit">Login</Button>
+				<Button onClick={() => firebase.signInPopup()} color="inherit">Login</Button>
 			}
 		</FirebaseContext.Consumer>
 	);

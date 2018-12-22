@@ -1,9 +1,11 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { config } from './auth';
+import EventEmitter from 'events';
 
-class Firebase {
+class Firebase extends EventEmitter {
 	constructor() {
+		super();
 		if (!firebase.apps.length)	this.app = firebase.initializeApp(config);
 		else this.app = firebase.apps[0];
 
@@ -16,6 +18,7 @@ class Firebase {
 
 	signInPopup = async () => {
 		const result = await this.app.auth().signInWithPopup(this.googleProvider);
+		this.emit('signIn', result);
 		return result;
 	};
 
