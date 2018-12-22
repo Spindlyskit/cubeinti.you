@@ -32,12 +32,16 @@ class App extends Component {
 		};
 		this.firebase = new Firebase();
 		this.token = null;
-		this.firebase.on('signIn', async result => {
-			result = await result;
-			console.log(result);
+
+		this.firebase.on('signIn', result => {
 			this.setState({ user: result.user });
 			this.token = result.credential.accessToken;
 		});
+		this.firebase.on('signOut', () => {
+			this.setState({ user: null });
+			this.token = null;
+		});
+
 		this.worker = null;
 		this.scrambler = new Scrambo();
 	}

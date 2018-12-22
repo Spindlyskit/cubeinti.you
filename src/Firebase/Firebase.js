@@ -22,7 +22,11 @@ class Firebase extends EventEmitter {
 		return result;
 	};
 
-	signOut = () => this.app.auth().signOut();
+	signOut = async () => {
+		const result = await this.app.auth().signOut();
+		this.emit('signOut', result);
+		return result;
+	};
 }
 
 export default Firebase;
