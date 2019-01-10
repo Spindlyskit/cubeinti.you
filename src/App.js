@@ -86,7 +86,7 @@ class App extends Component {
 							<ScrambleChip classes={classes} onClick={this.beginScramble}
 								scramble={this.state.scramble || 'Scrambling...'} />
 							<div className={classes.timerContainer}>
-								<Timer beginScramble={this.beginScramble} addTime={this.addTime} />
+								<Timer beginScramble={this.beginScramble} scramble={this.state.scramble} cube={this.state.cube} />
 							</div>
 						</main>
 					</div>

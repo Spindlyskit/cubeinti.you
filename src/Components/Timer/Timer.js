@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { FirebaseContext } from '../../Firebase';
+import { UserContext } from '../../UserContext';
 
 const styles = {
 	green: {
@@ -46,6 +48,8 @@ class Timer extends Component {
 			status: 'normal', // Can be: normal, willStart, didStop
 		};
 		this.timer = null;
+		this.fb = null;
+		this.uc = null;
 	}
 
 	keyDown = e => {
@@ -86,8 +90,17 @@ class Timer extends Component {
 	stop() {
 		clearInterval(this.timer);
 		this.timer = null;
-
-		this.props.addTime(this.state.lastTick - this.state.firstTick);
+		
+		console.log(this.props.scramble);
+		this.fb.addTime(this.uc.user.uid, {
+			time: this.state.lastTick - this.state.firstTick,
+			type: this.props.cube,
+			subtype: 'normal',
+			scramble: this.props.scramble[0],
+			penalty: 0,
+			created: +Date.now(),
+			archived: false,
+		});
 	}
 
 	tick() {
@@ -98,9 +111,21 @@ class Timer extends Component {
 		const className = this.state.status === 'didStop' ? 'red' :
 			this.state.status === 'willStart' ? 'green' : 'black';
 		return (
-			<Typography variant="h1" className={this.props.classes[className]} align="center" component="h1">
-				{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
-			</Typography>
+			<div>
+				<FirebaseContext.Consumer>
+					{firebase =>
+						{this.fb = firebase}
+					}
+				</FirebaseContext.Consumer>
+				<UserContext.Consumer>
+					{ucontext =>
+						{this.uc = ucontext}
+					}
+				</UserContext.Consumer>
+				<Typography variant="h1" className={this.props.classes[className]} align="center" component="h1">
+					{this.state.lastTick ? milliDisplay(this.state.lastTick - this.state.firstTick) : '0.00'}
+				</Typography>
+			</div>
 		);
 	}
 }
