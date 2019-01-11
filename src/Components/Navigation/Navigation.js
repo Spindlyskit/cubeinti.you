@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { UserContext } from '../../UserContext';
 import CubePicker from './CubePicker';
 import LoginButton from './LoginButton';
 import UserDisplay from './UserDisplay';
@@ -37,12 +36,9 @@ function Navigation(props) {
 					<Typography variant="h6" color="inherit" className={classes.grow}>
 						<CubePicker classes={classes} cube={props.cube} updateCube={props.updateCube} />
 					</Typography>
-					<UserContext.Consumer>
-						{({ user, firebase }) =>
-							user ? <UserDisplay user={user} firebase={firebase} /> :
-								<LoginButton/>
-						}
-					</UserContext.Consumer>
+					{
+						props.user ? <UserDisplay user={props.user} fb={props.fb} /> : <LoginButton fb={props.fb}/>
+					}
 				</Toolbar>
 			</AppBar>
 		</div>

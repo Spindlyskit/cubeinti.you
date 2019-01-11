@@ -1,14 +1,9 @@
 import { Button } from '@material-ui/core';
-import { FirebaseContext } from '../../Firebase';
 import React from 'react';
 
-function LoginButton() {
+function LoginButton(props) {
 	return (
-		<FirebaseContext.Consumer>
-			{firebase =>
-				<Button onClick={() => firebase.signInPopup()} color="inherit">Login</Button>
-			}
-		</FirebaseContext.Consumer>
+		<Button onClick={() => props.fb.signInPopup()} color="inherit">Login</Button>
 	);
 }
 

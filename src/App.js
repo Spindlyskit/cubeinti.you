@@ -4,8 +4,7 @@ import Timer from './Components/Timer/Timer';
 import { withStyles } from '@material-ui/core/styles';
 import ScrambleChip from './Components/Timer/ScrambleChip';
 import Scrambo from 'scrambo';
-import Firebase, { FirebaseContext } from './Firebase';
-import { UserContext } from './UserContext';
+import Firebase from './Firebase';
 
 const styles = theme => ({
 	main: {
@@ -77,21 +76,19 @@ class App extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<FirebaseContext.Provider value={this.firebase}>
-				<UserContext.Provider value={{ user: this.state.user, token: this.token, firebase: this.firebase }}>
-					<div className="App">
-						<Navigation updateCube={this.updateCube} cube={this.state.cube} />
-						<div className={classes.toolbar} />
-						<main className={classes.main}>
-							<ScrambleChip classes={classes} onClick={this.beginScramble}
-								scramble={this.state.scramble || 'Scrambling...'} />
-							<div className={classes.timerContainer}>
-								<Timer beginScramble={this.beginScramble} scramble={this.state.scramble} cube={this.state.cube} />
-							</div>
-						</main>
+		// <UserContext.Provider value={{  }}>
+			<div className="App">
+				<Navigation updateCube={this.updateCube} cube={this.state.cube} user={this.state.user} fb={this.firebase} />
+				<div className={classes.toolbar} />
+				<main className={classes.main}>
+					<ScrambleChip classes={classes} onClick={this.beginScramble}
+						scramble={this.state.scramble || 'Scrambling...'} />
+					<div className={classes.timerContainer}>
+						<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
+							cube={this.state.cube} user={this.state.user} fb={this.firebase} />
 					</div>
-				</UserContext.Provider>
-			</FirebaseContext.Provider>
+				</main>
+			</div>
 		);
 	}
 }

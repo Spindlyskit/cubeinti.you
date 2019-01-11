@@ -42,12 +42,12 @@ class Firebase extends EventEmitter {
 		return result;
 	};
 
-	addTime = (userId, timeObject) => {
+	addTime = timeObject => {
 		const db = this.app.firestore();
 		db.settings({
 			timestampsInSnapshots: true,
 		});
-		db.collection(`users/${userId}/times`).add(timeObject);
+		db.collection(`users/${this.user.uid}/times`).add(timeObject);
 	};
 }
 
