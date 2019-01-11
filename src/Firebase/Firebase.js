@@ -25,7 +25,7 @@ class Firebase extends EventEmitter {
 
 		this.user = null;
 		this.token = null;
-		
+
 		this.db = this.app.firestore();
 		this.db.settings({
 			timestampsInSnapshots: true,

@@ -3,6 +3,7 @@ import Navigation from './Components/Navigation/Navigation';
 import Timer from './Components/Timer/Timer';
 import { withStyles } from '@material-ui/core/styles';
 import ScrambleChip from './Components/Timer/ScrambleChip';
+import StatsContainer from './Components/Stats/StatsContainer';
 import Scrambo from 'scrambo';
 import Firebase from './Firebase';
 
@@ -29,14 +30,14 @@ class App extends Component {
 			scramble: null,
 			user: null,
 		};
-		this.firebase = new Firebase();
+		this.fb = new Firebase();
 		this.token = null;
 
-		this.firebase.on('signIn', result => {
+		this.fb.on('signIn', result => {
 			this.setState({ user: result.user });
 			this.token = result.credential.accessToken;
 		});
-		this.firebase.on('signOut', () => {
+		this.fb.on('signOut', () => {
 			this.setState({ user: null });
 			this.token = null;
 		});
@@ -62,7 +63,7 @@ class App extends Component {
 	};
 
 	addTime = time => {
-		this.firebase.addTime(this.state.user.uid, {
+		this.fb.addTime(this.state.user.uid, {
 			time: time,
 			type: this.state.cube,
 			subtype: 'normal',
@@ -78,15 +79,16 @@ class App extends Component {
 		return (
 		// <UserContext.Provider value={{  }}>
 			<div className="App">
-				<Navigation updateCube={this.updateCube} cube={this.state.cube} user={this.state.user} fb={this.firebase} />
+				<Navigation updateCube={this.updateCube} cube={this.state.cube} user={this.state.user} fb={this.fb} />
 				<div className={classes.toolbar} />
 				<main className={classes.main}>
 					<ScrambleChip classes={classes} onClick={this.beginScramble}
 						scramble={this.state.scramble || 'Scrambling...'} />
 					<div className={classes.timerContainer}>
 						<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
-							cube={this.state.cube} user={this.state.user} fb={this.firebase} />
+							cube={this.state.cube} user={this.state.user} fb={this.fb} />
 					</div>
+					<StatsContainer user={this.state.user} fb={this.fb} />
 				</main>
 			</div>
 		);
