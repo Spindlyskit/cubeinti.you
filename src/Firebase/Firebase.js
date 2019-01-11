@@ -25,6 +25,11 @@ class Firebase extends EventEmitter {
 
 		this.user = null;
 		this.token = null;
+		
+		this.db = this.app.firestore();
+		this.db.settings({
+			timestampsInSnapshots: true,
+		});
 
 		this.googleProvider = new firebase.auth.GoogleAuthProvider();
 		this.app.auth().useDeviceLanguage();
@@ -33,6 +38,7 @@ class Firebase extends EventEmitter {
 	signInPopup = async () => {
 		const result = await this.app.auth().signInWithPopup(this.googleProvider);
 		this.emit('signIn', result);
+		this.user = result.user;
 		return result;
 	};
 
@@ -43,11 +49,7 @@ class Firebase extends EventEmitter {
 	};
 
 	addTime = timeObject => {
-		const db = this.app.firestore();
-		db.settings({
-			timestampsInSnapshots: true,
-		});
-		db.collection(`users/${this.user.uid}/times`).add(timeObject);
+		this.db.collection(`users/${this.user.uid}/times`).add(timeObject);
 	};
 }
 
