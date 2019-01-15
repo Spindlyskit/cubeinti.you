@@ -11,13 +11,13 @@ class StatsContainer extends Component {
 			this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
 				.where('type', '==', '333')
 				.where('subtype', '==', 'normal')
+				.orderBy('created', 'desc')
 				.onSnapshot(querySnapshot => {
 					let newTimeList = [];
 					querySnapshot.forEach(doc => {
 						newTimeList.push(doc.data());
 					});
-					console.log(newTimeList);
-					this.setState(newTimeList);
+					this.setState({ times: newTimeList });
 				});
 		});
 
@@ -30,7 +30,7 @@ class StatsContainer extends Component {
 	render() {
 		return (
 			<div>
-				<TimeList times={this.times}/>
+				<TimeList times={this.state.times}/>
 			</div>
 		);
 	}

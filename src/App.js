@@ -77,7 +77,6 @@ class App extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-		// <UserContext.Provider value={{  }}>
 			<div className="App">
 				<Navigation updateCube={this.updateCube} cube={this.state.cube} user={this.state.user} fb={this.fb} />
 				<div className={classes.toolbar} />
