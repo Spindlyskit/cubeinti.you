@@ -9,7 +9,7 @@ import Firebase from './Firebase';
 
 const styles = theme => ({
 	main: {
-		maxWidth: 600,
+		maxWidth: '90%',
 		margin: '0 auto',
 		padding: `${theme.spacing.unit * 11}px 0 ${theme.spacing.unit * 6}px`,
 	},
