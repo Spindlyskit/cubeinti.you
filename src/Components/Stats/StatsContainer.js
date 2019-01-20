@@ -8,6 +8,16 @@ class StatsContainer extends Component {
 			times: [],
 		};
 		this.props.fb.on('signIn', () => { // User has been set in app
+		});
+
+		this.props.fb.on('signOut', () => {
+			this.setState({ times: [] });
+			this.unsub();
+		});
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.user !== prevProps.user && this.props.user !== null) {
 			this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
 				.where('type', '==', '333')
 				.where('subtype', '==', 'normal')
@@ -19,12 +29,7 @@ class StatsContainer extends Component {
 					});
 					this.setState({ times: newTimeList });
 				});
-		});
-
-		this.props.fb.on('signOut', () => {
-			this.setState({ times: [] });
-			this.unsub();
-		});
+		}
 	}
 
 	render() {

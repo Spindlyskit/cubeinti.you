@@ -31,15 +31,12 @@ class App extends Component {
 			user: null,
 		};
 		this.fb = new Firebase();
-		this.token = null;
 
-		this.fb.on('signIn', result => {
-			this.setState({ user: result.user });
-			this.token = result.credential.accessToken;
+		this.fb.on('signIn', u => {
+			this.setState({ user: u });
 		});
 		this.fb.on('signOut', () => {
 			this.setState({ user: null });
-			this.token = null;
 		});
 
 		this.worker = null;

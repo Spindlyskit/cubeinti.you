@@ -33,18 +33,25 @@ class Firebase extends EventEmitter {
 
 		this.googleProvider = new firebase.auth.GoogleAuthProvider();
 		this.app.auth().useDeviceLanguage();
+
+		this.app.auth().onAuthStateChanged(u => {
+			if (u !== null) {
+				this.emit('signIn', u);
+				this.user = u;
+			} else {
+				this.emit('signOut');
+				this.user = null;
+			}
+		});
 	}
 
 	signInPopup = async () => {
 		const result = await this.app.auth().signInWithPopup(this.googleProvider);
-		this.emit('signIn', result);
-		this.user = result.user;
 		return result;
 	};
 
 	signOut = async () => {
 		const result = await this.app.auth().signOut();
-		this.emit('signOut', result);
 		return result;
 	};
 
