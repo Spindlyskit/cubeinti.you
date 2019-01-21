@@ -9,8 +9,6 @@ const styles = {
 	paper: {
 		'padding-top': 20,
 		'padding-bottom': 20,
-		'padding-left': -5,
-		'padding-right': -5,
 	},
 };
 

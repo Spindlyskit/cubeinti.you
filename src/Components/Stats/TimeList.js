@@ -3,10 +3,6 @@ import TimeCard from './TimeCard';
 import Grid from '@material-ui/core/Grid';
 
 class TimeList extends Component {
-	constructor(props) {
-		super(props);
-		console.log(this.props.times);
-	}
 
 	render() {
 		return (

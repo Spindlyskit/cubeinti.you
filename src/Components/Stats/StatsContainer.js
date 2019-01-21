@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TimeList from './TimeList';
+import Averages from './Averages';
 import Grid from '@material-ui/core/Grid';
 
 class StatsContainer extends Component {
@@ -43,7 +44,7 @@ class StatsContainer extends Component {
 					Time info will go here
 				</Grid>
 				<Grid item xs={4}>
-					Averages will go here
+					<Averages times={this.state.times}></Averages>
 				</Grid>
 			</Grid>
 		);
