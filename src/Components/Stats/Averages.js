@@ -14,45 +14,70 @@ const styles = {
 class Averages extends Component {
 	constructor(props) {
 		super(props);
-		this.requiredAverages = [5, 12]
+		this.requiredAverages = [5, 12, 50];
 		this.averages = null;
 		this.genAverages();
 	}
-	
+
 	genAverages() {
 		this.averages = [];
 		for (let l of this.requiredAverages) {
-			this.averages.push(this.smallAverage(this.props.times.slice(0, l)));
+			if (this.props.times.length >= l) {
+				this.averages.push(this.getAverage(this.props.times.slice(0, l)));
+			} else {
+				this.averages.push('Need more times to calculate.');
+			}
 		}
 	}
-	
-	smallAverage = timeList => { // Eg ao5 and ao12 -> max and min are subtracted
-		if (timeList[0] != null) {
-			let total = 0;
-			for (let t of timeList) {
-				total += t.time;
-			}
-			// Subtract max and min values
-			total -= timeList.reduce((max, t) => max && max.time > t.time ? max : t, null).time;
-			total -= timeList.reduce((min, t) => min && min.time < t.time ? min : t, null).time;
 
-			return total / (timeList.length - 2);
+	getAverage = timeList => {
+		if (timeList[0] !== undefined) {
+			let newTimeList = timeList;
+			newTimeList.sort((a, b) => a.time - b.time);
+			for (let i = 0; i < newTimeList.length; i++) {
+				if (newTimeList[i].penalty === 2) {
+					newTimeList.push(newTimeList.splice(i, i));
+				}
+			}
+
+			let total = 0;
+
+			// Cutoff calculated as described at
+			// codegolf.stackexchange.com/questions/65806/calculate-the-average-and-standard-deviation-rubiks-cube-style;
+			let cutoff;
+			if (newTimeList.length < 5) {
+				cutoff = 0;
+			} else if (newTimeList.length < 12) {
+				cutoff = 1;
+			} else if (newTimeList.length < 40) {
+				cutoff = Math.floor(newTimeList.length / 12); // If the length is 12, this is 1
+			} else {
+				cutoff = Math.floor(newTimeList.length / 20);
+			}
+
+			for (let i = cutoff; i < newTimeList.length - cutoff; i++) {
+				if (newTimeList[i].penalty !== 2) {
+					total += newTimeList[i].time;
+				} else {
+					return 'DNF';
+				}
+			}
+
+			return Math.round(total / (newTimeList.length - (cutoff * 2)));
 		}
 		return 0;
 	};
-	
-	// TODO: add largeAverage which discounts top and bottom 10%
-	
+
 	render() {
 		this.genAverages();
 		return (
 			<Paper className={ this.props.classes.paper }>
 				<Typography variant="h5" gutterBottom>
-					{ this.averages.map((v, i) => {
-					return <div key={ i }>
-						Average of { this.requiredAverages[i] } : { milliDisplay(v) }
-					</div>})
-					}
+					{ this.averages.map((v, i) =>
+						<div key={ i }>
+							Average of { this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
+						</div>
+					)}
 				</Typography>
 			</Paper>
 		);
