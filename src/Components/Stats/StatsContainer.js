@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TimeList from './TimeList';
 import Averages from './Averages';
+import TimeInfo from './TimeInfo';
 import Grid from '@material-ui/core/Grid';
 
 class StatsContainer extends Component {
@@ -41,7 +42,7 @@ class StatsContainer extends Component {
 					<TimeList times={this.state.times}/>
 				</Grid>
 				<Grid item xs={4}>
-					Time info will go here
+					<TimeInfo newestTime={this.state.times[0]}/>
 				</Grid>
 				<Grid item xs={4}>
 					<Averages times={this.state.times}></Averages>
