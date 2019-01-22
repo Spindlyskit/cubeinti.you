@@ -9,8 +9,8 @@ class StatsContainer extends Component {
 		this.state = {
 			times: [],
 		};
-		this.props.fb.on('signIn', () => { // User has been set in app
-		});
+
+		this.unsub = null;
 
 		this.props.fb.on('signOut', () => {
 			this.setState({ times: [] });
