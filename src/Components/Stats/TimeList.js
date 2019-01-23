@@ -7,7 +7,7 @@ class TimeList extends Component {
 		return (
 			<div style={{ maxHeight: 200, overflowY: 'scroll', padding: 20 }}>
 				<Grid container spacing={8}>
-					{ this.props.times.map(time => <TimeCard key={ time.created } time={ time.time }/>) }
+					{ this.props.times.map(time => <TimeCard key={ time.created } time={ time }/>) }
 				</Grid>
 			</div>
 		);

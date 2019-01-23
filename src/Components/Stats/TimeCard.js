@@ -20,7 +20,7 @@ function TimeCard(props) {
 			<Paper className={classes.paper}>
 				<Typography variant="h5" className={classes.title}
 					color="textPrimary" align="center" component="h5">
-					{ milliDisplay(props.time) }
+					{ milliDisplay(props.time.time, props.time.penalty) }
 				</Typography>
 			</Paper>
 		</Grid>

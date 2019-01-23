@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import TimeList from './TimeList';
 import Averages from './Averages';
 import TimeInfo from './TimeInfo';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+
+const styles = {
+	grid: {
+		textAlign: 'center',
+	},
+};
 
 class StatsContainer extends Component {
 	constructor(props) {
@@ -18,6 +25,11 @@ class StatsContainer extends Component {
 			this.unsub();
 		});
 	}
+
+	addPenalty = (t, p) => {
+		console.log(p);
+		this.props.fb.addPenalty(t, p);
+	};
 
 	componentDidUpdate(prevProps) {
 		if (this.props.user !== prevProps.user && this.props.user !== null) {
@@ -37,19 +49,23 @@ class StatsContainer extends Component {
 
 	render() {
 		return (
-			<Grid container spacing={16}>
-				<Grid item xs={4}>
-					<TimeList times={this.state.times}/>
+			<div>
+				<Grid container spacing={24}>
+					<Grid item xs={6} className={this.props.classes.grid}>
+						<TimeList times={this.state.times}/>
+					</Grid>
+					<Grid item xs={6} className={this.props.classes.grid}>
+						<TimeInfo newestTime={this.state.times[0]} addPenalty={this.addPenalty}/>
+					</Grid>
 				</Grid>
-				<Grid item xs={4}>
-					<TimeInfo newestTime={this.state.times[0]}/>
+				<Grid container spacing={24}>
+					<Grid item xs={12} className={this.props.classes.grid}>
+						<Averages times={this.state.times}></Averages>
+					</Grid>
 				</Grid>
-				<Grid item xs={4}>
-					<Averages times={this.state.times}></Averages>
-				</Grid>
-			</Grid>
+			</div>
 		);
 	}
 }
 
-export default StatsContainer;
+export default withStyles(styles)(StatsContainer);

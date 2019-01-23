@@ -1,4 +1,7 @@
-function milliDisplay(s) {
+function milliDisplay(s, p) {
+	if (p === 1) {
+		s += 2000;
+	}
 	function pad(n) {
 		n = n.toString();
 		n = n.substr(0, 2);
@@ -18,7 +21,14 @@ function milliDisplay(s) {
 	if (mins > 0) timestring.push(pad(mins));
 	timestring.push(`${mins > 0 ? pad(secs) : secs}.${pad(Math.floor(ms / 10))}`);
 
-	return timestring.join(':');
+	let result = timestring.join(':');
+	if (p === 1) {
+		result = `${result}+`;
+	}
+	else if (p === 2) {
+		result = `DNF (${result})`;
+	}
+	return result;
 }
 
 export default milliDisplay;

@@ -58,6 +58,18 @@ class Firebase extends EventEmitter {
 	addTime = timeObject => {
 		this.db.collection(`users/${this.user.uid}/times`).add(timeObject);
 	};
+
+	addPenalty = (t, p) => {
+		if (this.user) {
+			this.db.collection(`users/${this.user.uid}/times`).where('created', '==', t.created)
+				.get()
+				.then(querySnapshot => {
+					querySnapshot.forEach(doc => {
+						this.db.collection(`users/${this.user.uid}/times`).doc(doc.id).update({ penalty: p });
+					});
+				});
+		}
+	};
 }
 
 export default Firebase;

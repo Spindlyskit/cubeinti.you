@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import milliDisplay from '../../Util/milliDisplay';
 
 const styles = {
-	paper: {
-		'min-height': '100%',
+	div: {
+		margin: 50,
 		padding: 20,
 	},
 };
@@ -14,7 +14,7 @@ const styles = {
 class Averages extends Component {
 	constructor(props) {
 		super(props);
-		this.requiredAverages = [5, 12, 50];
+		this.requiredAverages = [5, 12, 50, 100];
 		this.averages = null;
 		this.genAverages();
 	}
@@ -25,7 +25,7 @@ class Averages extends Component {
 			if (this.props.times.length >= l) {
 				this.averages.push(this.getAverage(this.props.times.slice(0, l)));
 			} else {
-				this.averages.push('Need more times to calculate.');
+				this.averages.push('N/A');
 			}
 		}
 	}
@@ -33,6 +33,11 @@ class Averages extends Component {
 	getAverage = timeList => {
 		if (timeList[0] !== undefined) {
 			let newTimeList = timeList;
+
+			for (let t of newTimeList) {
+				if (t.penalty === 1) t.time += 2000;
+			}
+
 			newTimeList.sort((a, b) => a.time - b.time);
 			for (let i = 0; i < newTimeList.length; i++) {
 				if (newTimeList[i].penalty === 2) {
@@ -71,15 +76,17 @@ class Averages extends Component {
 	render() {
 		this.genAverages();
 		return (
-			<Paper className={ this.props.classes.paper }>
+			<div className={this.props.classes.div}>
 				<Typography variant="h5" gutterBottom>
-					{ this.averages.map((v, i) =>
-						<div key={ i }>
-							Average of { this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
-						</div>
-					)}
+					<Grid container spacing={24}>
+						{ this.averages.map((v, i) =>
+							<Grid item key={ i } xs={3}>
+								Ao{ this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
+							</Grid>
+						)}
+					</Grid>
 				</Typography>
-			</Paper>
+			</div>
 		);
 	}
 }
