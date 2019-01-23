@@ -34,7 +34,7 @@ class Averages extends Component {
 			newTimeList.sort((a, b) => a.time - b.time);
 			for (let i = 0; i < newTimeList.length; i++) {
 				if (newTimeList[i].penalty === 2) {
-					newTimeList.push(newTimeList.splice(i, i));
+					newTimeList.push(newTimeList.splice(i, 1)[0]);
 				}
 			}
 
