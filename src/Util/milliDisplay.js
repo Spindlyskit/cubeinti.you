@@ -24,8 +24,7 @@ function milliDisplay(s, p) {
 	let result = timestring.join(':');
 	if (p === 1) {
 		result = `${result}+`;
-	}
-	else if (p === 2) {
+	} else if (p === 2) {
 		result = `DNF (${result})`;
 	}
 	return result;
