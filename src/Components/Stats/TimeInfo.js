@@ -56,7 +56,7 @@ class TimeInfo extends Component {
 					<Button variant="contained" color='secondary'
 						className={this.props.classes.deleteButton}
 						onClick={() => this.props.deleteTime(this.props.times[0])}>
-						DNF
+						Delete
 					</Button>
 				</div>
 				<Divider className={this.props.classes.divider}/>
