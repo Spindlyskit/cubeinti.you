@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import milliDisplay from '../../Util/milliDisplay';
 
-const styles = {
-	div: {
-		margin: 50,
-		padding: 20,
-	},
-};
 
 class Averages extends Component {
 	constructor(props) {
@@ -76,19 +69,17 @@ class Averages extends Component {
 	render() {
 		this.genAverages();
 		return (
-			<div className={this.props.classes.div}>
-				<Typography variant="h5" gutterBottom>
-					<Grid container spacing={24}>
-						{ this.averages.map((v, i) =>
-							<Grid item key={ i } xs={3}>
-								Ao{ this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
-							</Grid>
-						)}
-					</Grid>
-				</Typography>
-			</div>
+			<Typography variant="h5" gutterBottom>
+				<Grid container spacing={24}>
+					{ this.averages.map((v, i) =>
+						<Grid item key={ i } xs={3}>
+							Ao{ this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
+						</Grid>
+					)}
+				</Grid>
+			</Typography>
 		);
 	}
 }
 
-export default withStyles(styles)(Averages);
+export default Averages;

@@ -1,52 +1,67 @@
 import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import milliDisplay from '../../Util/milliDisplay';
 import Divider from '@material-ui/core/Divider';
+import Averages from './Averages';
 
 const styles = {
-	paper: {
-		'min-height': '100%',
-		padding: 20,
-	},
 	divider: {
 		margin: 10,
+	},
+	button: {
+		'margin-left': '2%',
+		'margin-right': '2%',
+	},
+	deleteButton: {
+		float: 'right',
+		'margin-right': '7%',
+	},
+	buttonContainer: {
+		'text-align': 'left',
+		'padding-left': '5%',
 	},
 };
 
 class TimeInfo extends Component {
 	render() {
-		let time = this.props.newestTime !== undefined;
+		let time = this.props.times[0] !== undefined;
 		let penalty;
 		if (time) {
-			penalty = this.props.newestTime.penalty;
+			penalty = this.props.times[0].penalty;
 		}
 		return (
-			<Paper className={ this.props.classes.paper }>
-				<Typography variant="h5" gutterBottom>
-					{ time ? milliDisplay(this.props.newestTime.time, this.props.newestTime.penalty) : '' }
-					<Divider className={this.props.classes.divider}/>
-					Scramble: { time ? this.props.newestTime.scramble : '' }
-					<Divider className={this.props.classes.divider}/>
+			<Typography variant="h5" gutterBottom>
+				{ time ? milliDisplay(this.props.times[0].time, this.props.times[0].penalty) : '' }
+				<Divider className={this.props.classes.divider}/>
+				Scramble: { time ? this.props.times[0].scramble : '' }
+				<Divider className={this.props.classes.divider}/>
+				<div className={this.props.classes.buttonContainer}>
 					<Button variant="contained" color={penalty === 0 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.newestTime, 0)}>
+						onClick={() => this.props.addPenalty(this.props.times[0], 0)}>
 						No Penalty
 					</Button>
 					<Button variant="contained" color={penalty === 1 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.newestTime, 1)}>
+						onClick={() => this.props.addPenalty(this.props.times[0], 1)}>
 						+2
 					</Button>
 					<Button variant="contained" color={penalty === 2 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.newestTime, 2)}>
+						onClick={() => this.props.addPenalty(this.props.times[0], 2)}>
 						DNF
 					</Button>
-				</Typography>
-			</Paper>
+					<Button variant="contained" color='secondary'
+						className={this.props.classes.deleteButton}
+						onClick={() => this.props.deleteTime(this.props.times[0])}>
+						DNF
+					</Button>
+				</div>
+				<Divider className={this.props.classes.divider}/>
+				<Averages times={this.props.times} />
+			</Typography>
 		);
 	}
 }

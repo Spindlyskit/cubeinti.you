@@ -70,6 +70,18 @@ class Firebase extends EventEmitter {
 				});
 		}
 	};
+
+	deleteTime = t => {
+		if (this.user) {
+			this.db.collection(`users/${this.user.uid}/times`).where('created', '==', t.created)
+				.get()
+				.then(querySnapshot => {
+					querySnapshot.forEach(doc => {
+						this.db.collection(`users/${this.user.uid}/times`).doc(doc.id).delete();
+					});
+				});
+		}
+	};
 }
 
 export default Firebase;

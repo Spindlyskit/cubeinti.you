@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import TimeList from './TimeList';
-import Averages from './Averages';
 import TimeInfo from './TimeInfo';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -27,8 +26,11 @@ class StatsContainer extends Component {
 	}
 
 	addPenalty = (t, p) => {
-		console.log(p);
 		this.props.fb.addPenalty(t, p);
+	};
+
+	deleteTime = t => {
+		this.props.fb.deleteTime(t);
 	};
 
 	componentDidUpdate(prevProps) {
@@ -55,12 +57,7 @@ class StatsContainer extends Component {
 						<TimeList times={this.state.times}/>
 					</Grid>
 					<Grid item xs={6} className={this.props.classes.grid}>
-						<TimeInfo newestTime={this.state.times[0]} addPenalty={this.addPenalty}/>
-					</Grid>
-				</Grid>
-				<Grid container spacing={24}>
-					<Grid item xs={12} className={this.props.classes.grid}>
-						<Averages times={this.state.times}></Averages>
+						<TimeInfo times={this.state.times} addPenalty={this.addPenalty} deleteTime={this.deleteTime}/>
 					</Grid>
 				</Grid>
 			</div>

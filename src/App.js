@@ -15,6 +15,7 @@ const styles = theme => ({
 	},
 	timerContainer: {
 		padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 6}px`,
+		minHeight: 200,
 	},
 	chip: {
 		fontSize: '150%',
