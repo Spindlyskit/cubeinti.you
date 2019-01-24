@@ -36,12 +36,13 @@ class TimeInfo extends Component {
 		}
 		return (
 			<Typography variant="h5" gutterBottom>
-					{ time ?
-						<div className={this.props.times[0].penalty === 2 ? this.props.classes.dnf : null}>
-							{milliDisplay(this.props.times[0].time)}
-							{this.props.times[0].penalty === 1 ? '+' : ''}
-						</div> : ''
-					}
+				{ time ?
+					<div className={this.props.times[0].penalty === 2 ? this.props.classes.dnf : null}>
+						{this.props.times[0].penalty === 1 ?
+							parseFloat(milliDisplay(this.props.times[0].time)) + 2 : milliDisplay(this.props.times[0].time)}
+						{this.props.times[0].penalty === 1 ? '+' : ''}
+					</div> : ''
+				}
 				<Divider className={this.props.classes.divider}/>
 				Scramble: { time ? this.props.times[0].scramble : '' }
 				<Divider className={this.props.classes.divider}/>
