@@ -22,6 +22,9 @@ const styles = {
 		'text-align': 'left',
 		'padding-left': '5%',
 	},
+	dnf: {
+		'text-decoration': 'line-through',
+	},
 };
 
 class TimeInfo extends Component {
@@ -33,7 +36,12 @@ class TimeInfo extends Component {
 		}
 		return (
 			<Typography variant="h5" gutterBottom>
-				{ time ? milliDisplay(this.props.times[0].time, this.props.times[0].penalty) : '' }
+					{ time ?
+						<div className={this.props.times[0].penalty === 2 ? this.props.classes.dnf : null}>
+							{milliDisplay(this.props.times[0].time)}
+							{this.props.times[0].penalty === 1 ? '+' : ''}
+						</div> : ''
+					}
 				<Divider className={this.props.classes.divider}/>
 				Scramble: { time ? this.props.times[0].scramble : '' }
 				<Divider className={this.props.classes.divider}/>

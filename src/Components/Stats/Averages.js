@@ -7,7 +7,7 @@ import milliDisplay from '../../Util/milliDisplay';
 class Averages extends Component {
 	constructor(props) {
 		super(props);
-		this.requiredAverages = [5, 12, 50, 100];
+		this.requiredAverages = [3, 5, 12, 50];
 		this.averages = null;
 		this.genAverages();
 	}

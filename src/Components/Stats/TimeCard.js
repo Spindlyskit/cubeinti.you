@@ -10,6 +10,9 @@ const styles = {
 		'padding-top': 20,
 		'padding-bottom': 20,
 	},
+	dnf: {
+		'text-decoration': 'line-through',
+	},
 };
 
 function TimeCard(props) {
@@ -18,9 +21,10 @@ function TimeCard(props) {
 	return (
 		<Grid item xs={12} md={6} lg={4}>
 			<Paper className={classes.paper}>
-				<Typography variant="h5" className={classes.title}
+				<Typography variant="h5"
+				className={[classes.title, props.time.penalty === 2 ? classes.dnf : null]}
 					color="textPrimary" align="center" component="h5">
-					{ milliDisplay(props.time.time, props.time.penalty) }
+					{ milliDisplay(props.time.time) }{ props.time.penalty === 1 ? '+' : '' }
 				</Typography>
 			</Paper>
 		</Grid>
