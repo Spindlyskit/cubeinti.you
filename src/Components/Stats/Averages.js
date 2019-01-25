@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import milliDisplay from '../../Util/milliDisplay';
 
 
@@ -69,15 +68,13 @@ class Averages extends Component {
 	render() {
 		this.genAverages();
 		return (
-			<Typography variant="h5" gutterBottom>
-				<Grid container spacing={24}>
-					{ this.averages.map((v, i) =>
-						<Grid item key={ i } xs={3}>
-							Ao{ this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
-						</Grid>
-					)}
-				</Grid>
-			</Typography>
+			<Grid container spacing={24}>
+				{ this.averages.map((v, i) =>
+					<Grid item key={ i } xs={3}>
+						Ao{ this.requiredAverages[i] } : { typeof v === 'number' ? milliDisplay(v) : v }
+					</Grid>
+				)}
+			</Grid>
 		);
 	}
 }

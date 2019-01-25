@@ -22,7 +22,7 @@ function TimeCard(props) {
 		<Grid item xs={12} md={6} lg={4}>
 			<Paper className={classes.paper}>
 				<Typography variant="h5"
-					className={[classes.title, props.time.penalty === 2 ? classes.dnf : null]}
+					className={`${classes.title} ${props.time.penalty === 2 ? classes.dnf : null}`}
 					color="textPrimary" align="center" component="h5">
 					{props.time.penalty === 1 ?
 						parseFloat(milliDisplay(props.time.time)) + 2 : milliDisplay(props.time.time)}

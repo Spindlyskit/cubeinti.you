@@ -52,14 +52,17 @@ class StatsContainer extends Component {
 	render() {
 		return (
 			<div>
-				<Grid container spacing={24}>
-					<Grid item xs={6} className={this.props.classes.grid}>
-						<TimeList times={this.state.times}/>
-					</Grid>
-					<Grid item xs={6} className={this.props.classes.grid}>
-						<TimeInfo times={this.state.times} addPenalty={this.addPenalty} deleteTime={this.deleteTime}/>
-					</Grid>
-				</Grid>
+				{ this.state.times[0] !== undefined ?
+					<Grid container spacing={24}>
+						<Grid item xs={6} className={this.props.classes.grid}>
+							<TimeList times={this.state.times}/>
+						</Grid>
+						<Grid item xs={6} className={this.props.classes.grid}>
+							<TimeInfo times={this.state.times} addPenalty={this.addPenalty} deleteTime={this.deleteTime}/>
+						</Grid>
+					</Grid> :
+					null
+				}
 			</div>
 		);
 	}
