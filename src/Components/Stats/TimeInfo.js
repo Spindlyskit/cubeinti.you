@@ -29,42 +29,42 @@ const styles = {
 
 class TimeInfo extends Component {
 	render() {
-		let time = this.props.times[0] !== undefined;
+		let time = this.props.selectedTime !== undefined;
 		let penalty;
 		if (time) {
-			penalty = this.props.times[0].penalty;
+			penalty = this.props.selectedTime.penalty;
 		}
 		return (
 			<Typography variant="h5" gutterBottom>
 				{ time ?
-					<div className={this.props.times[0].penalty === 2 ? this.props.classes.dnf : null}>
-						{this.props.times[0].penalty === 1 ?
-							parseFloat(milliDisplay(this.props.times[0].time)) + 2 : milliDisplay(this.props.times[0].time)}
-						{this.props.times[0].penalty === 1 ? '+' : ''}
+					<div className={this.props.selectedTime.penalty === 2 ? this.props.classes.dnf : null}>
+						{this.props.selectedTime.penalty === 1 ?
+							parseFloat(milliDisplay(this.props.selectedTime.time)) + 2 : milliDisplay(this.props.selectedTime.time)}
+						{this.props.selectedTime.penalty === 1 ? '+' : ''}
 					</div> : ''
 				}
 				<Divider className={this.props.classes.divider}/>
-				Scramble: { time ? this.props.times[0].scramble : '' }
+				Scramble: { time ? this.props.selectedTime.scramble : '' }
 				<Divider className={this.props.classes.divider}/>
 				<div className={this.props.classes.buttonContainer}>
 					<Button variant="contained" color={penalty === 0 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.times[0], 0)}>
+						onClick={() => this.props.addPenalty(this.props.selectedTime, 0)}>
 						No Penalty
 					</Button>
 					<Button variant="contained" color={penalty === 1 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.times[0], 1)}>
+						onClick={() => this.props.addPenalty(this.props.selectedTime, 1)}>
 						+2
 					</Button>
 					<Button variant="contained" color={penalty === 2 ? 'primary' : 'default'}
 						className={this.props.classes.button}
-						onClick={() => this.props.addPenalty(this.props.times[0], 2)}>
+						onClick={() => this.props.addPenalty(this.props.selectedTime, 2)}>
 						DNF
 					</Button>
 					<Button variant="contained" color='secondary'
 						className={this.props.classes.deleteButton}
-						onClick={() => this.props.deleteTime(this.props.times[0])}>
+						onClick={() => this.props.deleteTime(this.props.selectedTime)}>
 						Delete
 					</Button>
 				</div>

@@ -15,12 +15,13 @@ class StatsContainer extends Component {
 		super(props);
 		this.state = {
 			times: [],
+			selected: {},
 		};
 
 		this.unsub = null;
 
 		this.props.fb.on('signOut', () => {
-			this.setState({ times: [] });
+			this.setState({ times: [], selected: {} });
 			this.unsub();
 		});
 	}
@@ -31,6 +32,10 @@ class StatsContainer extends Component {
 
 	deleteTime = t => {
 		this.props.fb.deleteTime(t);
+	};
+
+	setSelected = t => {
+		this.setState({ selected: t });
 	};
 
 	componentDidUpdate(prevProps) {
@@ -44,6 +49,10 @@ class StatsContainer extends Component {
 					querySnapshot.forEach(doc => {
 						newTimeList.push(doc.data());
 					});
+
+					if (newTimeList[0] !== this.state.times[0]) {
+						this.setState({ selected: newTimeList[0] });
+					}
 					this.setState({ times: newTimeList });
 				});
 		}
@@ -55,10 +64,12 @@ class StatsContainer extends Component {
 				{ this.state.times[0] !== undefined ?
 					<Grid container spacing={24}>
 						<Grid item xs={6} className={this.props.classes.grid}>
-							<TimeList times={this.state.times}/>
+							<TimeList times={this.state.times} selectedTime={this.state.selected}
+								setSelected={this.setSelected}/>
 						</Grid>
 						<Grid item xs={6} className={this.props.classes.grid}>
-							<TimeInfo times={this.state.times} addPenalty={this.addPenalty} deleteTime={this.deleteTime}/>
+							<TimeInfo times={this.state.times} selectedTime={this.state.selected}
+								addPenalty={this.addPenalty} deleteTime={this.deleteTime}/>
 						</Grid>
 					</Grid> :
 					null
