@@ -24,10 +24,13 @@ class Averages extends Component {
 
 	getAverage = timeList => {
 		if (timeList[0] !== undefined) {
-			let newTimeList = timeList;
+			let newTimeList = [];
 
-			for (let t of newTimeList) {
-				if (t.penalty === 1) t.time += 2000;
+			for (let t of timeList) {
+				newTimeList.push(Object.create(t));
+				if (t.penalty === 1) {
+					newTimeList[newTimeList.length - 1].time += 2000;
+				}
 			}
 
 			newTimeList.sort((a, b) => a.time - b.time);

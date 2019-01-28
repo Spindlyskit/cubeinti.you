@@ -38,7 +38,7 @@ class StatsContainer extends Component {
 		this.setState({ selected: t });
 	};
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate = prevProps => {
 		if (this.props.user !== prevProps.user && this.props.user !== null) {
 			this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
 				.where('type', '==', '333')
@@ -56,7 +56,7 @@ class StatsContainer extends Component {
 					this.setState({ times: newTimeList });
 				});
 		}
-	}
+	};
 
 	render() {
 		return (

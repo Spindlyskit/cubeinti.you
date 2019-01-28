@@ -26,7 +26,7 @@ function TimeCard(props) {
 				className={`${classes.title} ${props.time.penalty === 2 ? classes.dnf : null}`}
 				color="textPrimary" align="center" component="h5">
 				{props.time.penalty === 1 ?
-					parseFloat(milliDisplay(props.time.time)) + 2 : milliDisplay(props.time.time)}
+					milliDisplay(props.time.time + 2000) : milliDisplay(props.time.time)}
 				{props.time.penalty === 1 ? '+' : ''}
 			</Typography>
 		</Paper>

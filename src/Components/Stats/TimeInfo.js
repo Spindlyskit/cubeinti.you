@@ -39,7 +39,7 @@ class TimeInfo extends Component {
 				{ time ?
 					<div className={this.props.selectedTime.penalty === 2 ? this.props.classes.dnf : null}>
 						{this.props.selectedTime.penalty === 1 ?
-							parseFloat(milliDisplay(this.props.selectedTime.time)) + 2 : milliDisplay(this.props.selectedTime.time)}
+							milliDisplay(this.props.selectedTime.time + 2000) : milliDisplay(this.props.selectedTime.time)}
 						{this.props.selectedTime.penalty === 1 ? '+' : ''}
 					</div> : ''
 				}
