@@ -22,6 +22,14 @@ const styles = theme => ({
 	},
 });
 
+const scrambleLengths = {
+	'333': 25,
+	'444': 40,
+	'555': 60,
+	'666': 80,
+	'777': 100,
+};
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -51,13 +59,14 @@ class App extends Component {
 	}
 
 	beginScramble = () => {
-		const newScramble = this.scrambler.type(this.state.cube).get(1);
+		const newScramble = this.scrambler.type(this.state.cube)
+			.length(scrambleLengths[this.state.cube])
+			.seed(new Date().getTime()).get();
 		this.setState({ scramble: newScramble });
 	};
 
 	updateCube = newValue => {
-		this.setState({ cube: newValue });
-		this.beginScramble();
+		this.setState({ cube: newValue }, this.beginScramble);
 	};
 
 	addTime = time => {
