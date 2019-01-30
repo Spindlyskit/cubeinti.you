@@ -36,6 +36,7 @@ class App extends Component {
 		this.state = {
 			// The cube that is currently being scrambled/solved
 			cube: '333',
+			session: 'normal',
 			scramble: null,
 			user: null,
 		};
@@ -67,35 +68,30 @@ class App extends Component {
 	};
 
 	updateCube = newValue => {
-		this.setState({ cube: newValue }, this.beginScramble);
+		this.setState({ cube: newValue, session: 'normal' }, this.beginScramble);
 	};
-
-	addTime = time => {
-		this.fb.addTime(this.state.user.uid, {
-			time: time,
-			type: this.state.cube,
-			subtype: 'normal',
-			scramble: this.state.scramble[0],
-			penalty: 0,
-			created: +Date.now(),
-			archived: false,
-		});
+	updateSession = newValue => {
+		this.setState({ session: newValue });
 	};
 
 	render() {
 		const { classes } = this.props;
 		return (
 			<div className="App">
-				<Navigation updateCube={this.updateCube} cube={this.state.cube} user={this.state.user} fb={this.fb} />
+				<Navigation user={this.state.user} fb={this.fb}
+					updateCube={this.updateCube} cube={this.state.cube}
+					updateSession={this.updateSession} session={this.state.session} />
 				<div className={classes.toolbar} />
 				<main className={classes.main}>
 					<ScrambleChip classes={classes} onClick={this.beginScramble}
 						scramble={this.state.scramble || 'Scrambling...'} />
 					<div className={classes.timerContainer}>
 						<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
-							cube={this.state.cube} user={this.state.user} fb={this.fb} />
+							cube={this.state.cube} session={this.state.session}
+							user={this.state.user} fb={this.fb} />
 					</div>
-					<StatsContainer user={this.state.user} fb={this.fb} />
+					<StatsContainer user={this.state.user} fb={this.fb}
+					cube={this.state.cube} session={this.state.session} />
 				</main>
 			</div>
 		);

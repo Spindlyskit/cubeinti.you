@@ -18,6 +18,7 @@ function CubePicker(props) {
 		<MenuItem value="333">3x3 Cube</MenuItem>
 		<MenuItem value="444">4x4 Cube</MenuItem>
 		<MenuItem value="555">5x5 Cube</MenuItem>
+		<MenuItem value="666">6x6 Cube</MenuItem>
 		<MenuItem value="skewb">Skewb</MenuItem>
 	</Select>;
 }

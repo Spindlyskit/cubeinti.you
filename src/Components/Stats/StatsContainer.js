@@ -39,22 +39,26 @@ class StatsContainer extends Component {
 	};
 
 	componentDidUpdate = prevProps => {
-		if (this.props.user !== prevProps.user && this.props.user !== null) {
-			this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
-				.where('type', '==', '333')
-				.where('subtype', '==', 'normal')
-				.orderBy('created', 'desc')
-				.onSnapshot(querySnapshot => {
-					let newTimeList = [];
-					querySnapshot.forEach(doc => {
-						newTimeList.push(doc.data());
+		if (this.props.user !== null) {
+			if ((this.props.user !== prevProps.user) ||
+			(this.props.cube !== prevProps.cube) ||
+			(this.props.session !== prevProps.session)) {
+				this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
+					.where('type', '==', this.props.cube)
+					.where('subtype', '==', this.props.session)
+					.orderBy('created', 'desc')
+					.onSnapshot(querySnapshot => {
+						let newTimeList = [];
+						querySnapshot.forEach(doc => {
+							newTimeList.push(doc.data());
+						});
+	
+						if (newTimeList[0] !== this.state.times[0]) {
+							this.setState({ selected: newTimeList[0] });
+						}
+						this.setState({ times: newTimeList });
 					});
-
-					if (newTimeList[0] !== this.state.times[0]) {
-						this.setState({ selected: newTimeList[0] });
-					}
-					this.setState({ times: newTimeList });
-				});
+			}
 		}
 	};
 

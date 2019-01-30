@@ -72,7 +72,7 @@ class Timer extends Component {
 			this.props.fb.addTime({
 				time: this.state.lastTick - this.state.firstTick,
 				type: this.props.cube,
-				subtype: 'normal',
+				subtype: this.props.session,
 				scramble: this.props.scramble[0],
 				penalty: 0,
 				created: +Date.now(),
