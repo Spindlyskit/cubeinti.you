@@ -16,10 +16,16 @@ function CubePicker(props) {
 		}}
 	>
 		<MenuItem value="333">3x3 Cube</MenuItem>
+		<MenuItem value="222">2x2 Cube</MenuItem>
 		<MenuItem value="444">4x4 Cube</MenuItem>
 		<MenuItem value="555">5x5 Cube</MenuItem>
 		<MenuItem value="666">6x6 Cube</MenuItem>
+		<MenuItem value="777">7x7 Cube</MenuItem>
+		<MenuItem value="clock">Clock</MenuItem>
+		<MenuItem value="minx">Megaminx</MenuItem>
+		<MenuItem value="pyram">Pyraminx</MenuItem>
 		<MenuItem value="skewb">Skewb</MenuItem>
+		<MenuItem value="sq1">Square-1</MenuItem>
 	</Select>;
 }
 

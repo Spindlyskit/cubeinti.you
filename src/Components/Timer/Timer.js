@@ -73,7 +73,7 @@ class Timer extends Component {
 				time: this.state.lastTick - this.state.firstTick,
 				type: this.props.cube,
 				subtype: this.props.session,
-				scramble: this.props.scramble[0],
+				scramble: this.props.scramble[0].scramble_string,
 				penalty: 0,
 				created: +Date.now(),
 				archived: false,

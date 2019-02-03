@@ -4,7 +4,7 @@ import Timer from './Components/Timer/Timer';
 import { withStyles } from '@material-ui/core/styles';
 import ScrambleChip from './Components/Timer/ScrambleChip';
 import StatsContainer from './Components/Stats/StatsContainer';
-import Scrambo from 'scrambo';
+import { Scrambow } from 'scrambow';
 import Firebase from './Firebase';
 
 const styles = theme => ({
@@ -23,11 +23,11 @@ const styles = theme => ({
 });
 
 const scrambleLengths = {
-	333: 25,
 	444: 40,
 	555: 60,
 	666: 80,
 	777: 100,
+	minx: 70,
 };
 
 class App extends Component {
@@ -50,7 +50,7 @@ class App extends Component {
 		});
 
 		this.worker = null;
-		this.scrambler = new Scrambo();
+		this.scrambler = new Scrambow();
 	}
 
 	componentDidMount() {
@@ -60,10 +60,13 @@ class App extends Component {
 	}
 
 	beginScramble = () => {
-		const newScramble = this.scrambler.type(this.state.cube)
-			.length(scrambleLengths[this.state.cube])
-			.seed(new Date().getTime())
-			.get();
+		this.scrambler.setType(this.state.cube).setSeed(new Date().getTime());
+
+		if (scrambleLengths[this.state.cube !== null]) {
+			this.scrambler.setLength(scrambleLengths[this.state.cube])
+		}
+
+		const newScramble = this.scrambler.get();
 		this.setState({ scramble: newScramble });
 	};
 
