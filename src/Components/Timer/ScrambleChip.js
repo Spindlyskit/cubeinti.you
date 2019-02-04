@@ -12,6 +12,7 @@ const styles = {
 	chip: {
 		height: '100%',
 		padding: '0.5%',
+		fontSize: '150%',
 	},
 	label: {
 		maxWidth: '100%',
@@ -25,7 +26,7 @@ class ScrambleChip extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Typography align="center" color="textPrimary" noWrap={false} className={classes.chipContainer} gutterBottom>
+			<Typography component={'div'} align="center" color="textPrimary" noWrap={false} className={classes.chipContainer}>
 				<Chip label={this.props.scramble[0].scramble_string} onClick={this.props.onClick}
 					classes={{ label: classes.label }} className={classes.chip} />
 			</Typography>

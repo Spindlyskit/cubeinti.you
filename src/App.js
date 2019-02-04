@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Navigation from './Components/Navigation/Navigation';
 import Timer from './Components/Timer/Timer';
-import { withStyles } from '@material-ui/core/styles';
 import ScrambleChip from './Components/Timer/ScrambleChip';
 import StatsContainer from './Components/Stats/StatsContainer';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Scrambow } from 'scrambow';
 import Firebase from './Firebase';
@@ -18,9 +17,6 @@ const styles = theme => ({
 	timerContainer: {
 		padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 6}px`,
 		minHeight: 200,
-	},
-	chip: {
-		fontSize: '150%',
 	},
 });
 
@@ -69,9 +65,9 @@ class App extends Component {
 			this.setState({ user: null });
 		});
 		this.fb.on('settingsChange', s => {
-			this.setState({ settings: s });	
+			this.setState({ settings: s });
 		});
-		
+
 		this.worker = null;
 		this.scrambler = new Scrambow();
 	}
@@ -111,7 +107,7 @@ class App extends Component {
 						updateSession={this.updateSession} session={this.state.session} />
 					<div className={classes.toolbar} />
 					<main className={classes.main}>
-						<ScrambleChip classes={classes} onClick={this.beginScramble}
+						<ScrambleChip onClick={this.beginScramble}
 							scramble={this.state.scramble || 'Scrambling...'} />
 						<div className={classes.timerContainer}>
 							<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
