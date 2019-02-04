@@ -3,17 +3,14 @@ import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import milliDisplay from '../../Util/milliDisplay';
 
-const styles = {
+const styles = theme => ({
 	green: {
 		color: '#76FF03',
 	},
 	red: {
 		color: '#F44336',
 	},
-	black: {
-		color: '#000',
-	},
-};
+});
 
 
 class Timer extends Component {
@@ -98,5 +95,5 @@ class Timer extends Component {
 	}
 }
 
-export default withStyles(styles)(Timer);
+export default withStyles(styles, { withTheme: true })(Timer);
 

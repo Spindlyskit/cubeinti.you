@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import milliDisplay from '../../Util/milliDisplay';
 
-const styles = {
+const styles = theme => ({
 	paper: {
 		'padding-top': 20,
 		'padding-bottom': 20,
@@ -13,9 +13,9 @@ const styles = {
 		'text-decoration': 'line-through',
 	},
 	selected: {
-		backgroundColor: '#F5F5F5',
+		backgroundColor: theme.palette.background.default,
 	},
-};
+});
 
 function TimeCard(props) {
 	const { classes } = props;
@@ -33,4 +33,4 @@ function TimeCard(props) {
 	);
 }
 
-export default withStyles(styles)(TimeCard);
+export default withStyles(styles, { withTheme: true })(TimeCard);

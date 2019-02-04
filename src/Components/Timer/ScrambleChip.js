@@ -33,4 +33,4 @@ class ScrambleChip extends Component {
 	}
 }
 
-export default withStyles(styles)(ScrambleChip);
+export default withStyles(styles, { withTheme: true })(ScrambleChip);

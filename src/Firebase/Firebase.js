@@ -17,6 +17,10 @@ Times should look like this:
 }
  */
 
+const defaultSettings = {
+	theme: 'default',
+};
+
 class Firebase extends EventEmitter {
 	constructor() {
 		super();
@@ -34,10 +38,20 @@ class Firebase extends EventEmitter {
 		this.googleProvider = new firebase.auth.GoogleAuthProvider();
 		this.app.auth().useDeviceLanguage();
 
-		this.app.auth().onAuthStateChanged(u => {
+		this.app.auth().onAuthStateChanged(async u => {
 			if (u !== null) {
 				this.emit('signIn', u);
 				this.user = u;
+				const settingsTest = await this.db.doc(`users/${this.user.uid}`).get()
+					.then(data => {
+						if (data.exists) {
+							return data.data();
+						} else {
+							this.db.doc(`users/${this.user.uid}`).set(defaultSettings);
+							return defaultSettings;
+						}
+				});
+				this.emit('settingsChange', settingsTest);
 			} else {
 				this.emit('signOut');
 				this.user = null;

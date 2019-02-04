@@ -4,6 +4,8 @@ import Timer from './Components/Timer/Timer';
 import { withStyles } from '@material-ui/core/styles';
 import ScrambleChip from './Components/Timer/ScrambleChip';
 import StatsContainer from './Components/Stats/StatsContainer';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Scrambow } from 'scrambow';
 import Firebase from './Firebase';
 
@@ -29,6 +31,21 @@ const scrambleLengths = {
 	777: 100,
 	minx: 70,
 };
+const themes = {
+	default: createMuiTheme({
+		typography: {
+			useNextVariants: true,
+		},
+	}),
+	dark: createMuiTheme({
+		palette: {
+			type: 'dark',
+		},
+		typography: {
+			useNextVariants: true,
+		},
+	}),
+};
 
 class App extends Component {
 	constructor(props) {
@@ -39,6 +56,9 @@ class App extends Component {
 			session: 'normal',
 			scramble: null,
 			user: null,
+			settings: {
+				theme: 'default',
+			},
 		};
 		this.fb = new Firebase();
 
@@ -48,7 +68,10 @@ class App extends Component {
 		this.fb.on('signOut', () => {
 			this.setState({ user: null });
 		});
-
+		this.fb.on('settingsChange', s => {
+			this.setState({ settings: s });	
+		});
+		
 		this.worker = null;
 		this.scrambler = new Scrambow();
 	}
@@ -80,23 +103,26 @@ class App extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="App">
-				<Navigation user={this.state.user} fb={this.fb}
-					updateCube={this.updateCube} cube={this.state.cube}
-					updateSession={this.updateSession} session={this.state.session} />
-				<div className={classes.toolbar} />
-				<main className={classes.main}>
-					<ScrambleChip classes={classes} onClick={this.beginScramble}
-						scramble={this.state.scramble || 'Scrambling...'} />
-					<div className={classes.timerContainer}>
-						<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
-							cube={this.state.cube} session={this.state.session}
-							user={this.state.user} fb={this.fb} />
-					</div>
-					<StatsContainer user={this.state.user} fb={this.fb}
-						cube={this.state.cube} session={this.state.session} />
-				</main>
-			</div>
+			<MuiThemeProvider theme={themes[this.state.settings.theme]}>
+				<CssBaseline />
+				<div className="App">
+					<Navigation user={this.state.user} fb={this.fb}
+						updateCube={this.updateCube} cube={this.state.cube}
+						updateSession={this.updateSession} session={this.state.session} />
+					<div className={classes.toolbar} />
+					<main className={classes.main}>
+						<ScrambleChip classes={classes} onClick={this.beginScramble}
+							scramble={this.state.scramble || 'Scrambling...'} />
+						<div className={classes.timerContainer}>
+							<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
+								cube={this.state.cube} session={this.state.session}
+								user={this.state.user} fb={this.fb} />
+						</div>
+						<StatsContainer user={this.state.user} fb={this.fb}
+							cube={this.state.cube} session={this.state.session} />
+					</main>
+				</div>
+			</MuiThemeProvider>
 		);
 	}
 }

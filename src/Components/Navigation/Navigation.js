@@ -49,4 +49,4 @@ function Navigation(props) {
 	);
 }
 
-export default withStyles(styles)(Navigation);
+export default withStyles(styles, { withTheme: true })(Navigation);

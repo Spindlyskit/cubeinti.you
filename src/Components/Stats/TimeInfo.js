@@ -75,4 +75,4 @@ class TimeInfo extends Component {
 	}
 }
 
-export default withStyles(styles)(TimeInfo);
+export default withStyles(styles, { withTheme: true })(TimeInfo);

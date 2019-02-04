@@ -83,4 +83,4 @@ class StatsContainer extends Component {
 	}
 }
 
-export default withStyles(styles)(StatsContainer);
+export default withStyles(styles, { withTheme: true })(StatsContainer);
