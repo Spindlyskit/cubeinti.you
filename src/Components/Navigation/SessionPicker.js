@@ -3,7 +3,7 @@ import React from 'react';
 
 function SessionPicker(props) {
 	const { classes } = props;
-	// this array is id, displayName
+	// This array is id, displayName
 	const sessions = {
 		333: [['normal', 'Normal'], ['oh', 'One-handed'], ['bld', 'Blindfolded'], ['wf', 'With Feet'], ['ext', 'extra']],
 		222: [['normal', 'Normal'], ['ext', 'extra']],
@@ -16,7 +16,7 @@ function SessionPicker(props) {
 		pyram: [['normal', 'Normal'], ['ext', 'extra']],
 		sq1: [['normal', 'Normal'], ['ext', 'extra']],
 		skewb: [['normal', 'Normal'], ['ext', 'extra']],
-	}
+	};
 	return <Select
 		value={props.session}
 		displayEmpty

@@ -63,7 +63,7 @@ class App extends Component {
 		this.scrambler.setType(this.state.cube).setSeed(new Date().getTime());
 
 		if (scrambleLengths[this.state.cube !== null]) {
-			this.scrambler.setLength(scrambleLengths[this.state.cube])
+			this.scrambler.setLength(scrambleLengths[this.state.cube]);
 		}
 
 		const newScramble = this.scrambler.get();
@@ -94,7 +94,7 @@ class App extends Component {
 							user={this.state.user} fb={this.fb} />
 					</div>
 					<StatsContainer user={this.state.user} fb={this.fb}
-					cube={this.state.cube} session={this.state.session} />
+						cube={this.state.cube} session={this.state.session} />
 				</main>
 			</div>
 		);

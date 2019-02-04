@@ -18,15 +18,16 @@ const styles = {
 		whiteSpace: 'normal',
 		'word-wrap': 'break-word',
 		'overflow-wrap': 'break-word',
-	}
-}
+	},
+};
 
 class ScrambleChip extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
 			<Typography align="center" color="textPrimary" noWrap={false} className={classes.chipContainer} gutterBottom>
-				<Chip label={this.props.scramble[0].scramble_string} onClick={this.props.onClick} classes={{label: classes.label}} className={classes.chip} />
+				<Chip label={this.props.scramble[0].scramble_string} onClick={this.props.onClick}
+					classes={{ label: classes.label }} className={classes.chip} />
 			</Typography>
 		);
 	}

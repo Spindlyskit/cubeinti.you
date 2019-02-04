@@ -52,7 +52,7 @@ class StatsContainer extends Component {
 						querySnapshot.forEach(doc => {
 							newTimeList.push(doc.data());
 						});
-	
+
 						if (newTimeList[0] !== this.state.times[0]) {
 							this.setState({ selected: newTimeList[0] });
 						}
