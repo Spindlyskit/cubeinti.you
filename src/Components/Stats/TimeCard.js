@@ -14,6 +14,7 @@ const styles = theme => ({
 	},
 	selected: {
 		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
 	},
 });
 
@@ -23,8 +24,9 @@ function TimeCard(props) {
 	return (
 		<Paper className={`${classes.paper} ${props.selected === props.time ? classes.selected : null}`}>
 			<Typography variant="h5"
-				className={`${classes.title} ${props.time.penalty === 2 ? classes.dnf : null}`}
-				color="textPrimary" align="center" component="h5">
+				className={`${classes.title} ${props.time.penalty === 2 ? classes.dnf : null}
+					${props.selected === props.time ? classes.selected : null}`}
+				align="center" component="h5">
 				{props.time.penalty === 1 ?
 					milliDisplay(props.time.time + 2000) : milliDisplay(props.time.time)}
 				{props.time.penalty === 1 ? '+' : ''}
