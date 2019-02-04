@@ -13,7 +13,7 @@ const styles = theme => ({
 		'text-decoration': 'line-through',
 	},
 	selected: {
-		backgroundColor: theme.palette.background.default,
+		backgroundColor: theme.palette.primary.main,
 	},
 });
 
