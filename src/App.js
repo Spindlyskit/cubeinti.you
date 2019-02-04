@@ -73,8 +73,6 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.worker = new Worker('/tnoodle.js');
-		this.worker.window = window;
 		this.beginScramble();
 	}
 
