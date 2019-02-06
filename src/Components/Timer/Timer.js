@@ -27,23 +27,22 @@ class Timer extends Component {
 	}
 
 	keyDown = e => {
+		if (this.timer) {
+			this.props.beginScramble();
+			this.stop();
+			this.setState({ status: 'didStop' });
+		}
 		if (e.keyCode !== 32) return;
 		// If the timer is not started in normal then we'll begin to start it again
 		if (!this.timer && this.state.status !== 'didStop') {
 			this.setState({ status: 'willStart' });
-			return;
 		}
-		// The timer can only stop from the normal state
-		if (this.state.status !== 'normal') return;
-		this.stop();
-		this.props.beginScramble();
-		this.setState({ status: 'didStop' });
 	};
 
 	keyUp = e => {
-		if (e.keyCode !== 32 || this.timer) return;
+		if (this.timer) return;
 		if (this.state.status === 'didStop') this.setState({ status: 'normal' });
-		else if (this.state.status === 'willStart') this.start();
+		else if (this.state.status === 'willStart' && e.keyCode === 32) this.start();
 	};
 
 	componentDidMount() {
