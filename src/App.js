@@ -35,7 +35,7 @@ const themes = {
 			useNextVariants: true,
 		},
 		palette: {
-			secondary: red,	
+			secondary: red,
 		},
 	}),
 	dark: createMuiTheme({
@@ -64,12 +64,12 @@ class App extends Component {
 				theme: 'default',
 			},
 		};
-		
+
 		this.fb = new Firebase();
 
 		this.fb.on('signIn', u => {
 			this.setState({ user: u });
-			document.title = pageTitle + ' | ' + u.displayName;
+			document.title = `${pageTitle} | ${u.displayName}`;
 		});
 		this.fb.on('signOut', () => {
 			this.setState({ user: null });
@@ -127,15 +127,16 @@ class App extends Component {
 							cube={this.state.cube} session={this.state.session} />
 					</main>
 					<Typography variant="caption" align="center" gutterBottom>
-						Cubeintime uses Google and Firebase for authentication and data storage - these are the only third parties your data will be shared with.
-					    <br/>
-					    <a href="https://policies.google.com/technologies/partner-sites?hl=en-GB&gl=uk">
-					        See how Google processes your data
-					    </a>
-					    <br/>
-					    <a href="https://firebase.google.com/support/privacy/#data_processing_information">
-					        See how Firebase processes your data
-					    </a>
+						Cubeintime uses Google and Firebase for authentication and data storage
+						- these are the only third parties your data will be shared with.
+						<br/>
+						<a href="https://policies.google.com/technologies/partner-sites?hl=en-GB&gl=uk">
+							See how Google processes your data
+						</a>
+						<br/>
+						<a href="https://firebase.google.com/support/privacy/#data_processing_information">
+							See how Firebase processes your data
+						</a>
 					</Typography>
 				</div>
 			</MuiThemeProvider>
