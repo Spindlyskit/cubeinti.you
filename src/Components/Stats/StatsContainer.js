@@ -22,7 +22,9 @@ class StatsContainer extends Component {
 
 		this.props.fb.on('signOut', () => {
 			this.setState({ times: [], selected: {} });
-			this.unsub();
+			if (this.unsub) {
+				this.unsub();
+			}
 		});
 	}
 

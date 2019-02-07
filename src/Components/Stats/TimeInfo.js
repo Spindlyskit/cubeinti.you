@@ -6,7 +6,7 @@ import milliDisplay from '../../Util/milliDisplay';
 import Divider from '@material-ui/core/Divider';
 import Averages from './Averages';
 
-const styles = {
+const styles = theme => ({
 	divider: {
 		margin: 10,
 	},
@@ -25,7 +25,7 @@ const styles = {
 	dnf: {
 		'text-decoration': 'line-through',
 	},
-};
+});
 
 class TimeInfo extends Component {
 	render() {

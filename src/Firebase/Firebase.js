@@ -18,7 +18,7 @@ Times should look like this:
  */
 
 const defaultSettings = {
-	theme: 'default',
+	theme: 'light',
 };
 
 class Firebase extends EventEmitter {
@@ -53,8 +53,8 @@ class Firebase extends EventEmitter {
 				});
 				this.emit('settingsChange', settingsTest);
 			} else {
-				this.emit('signOut');
 				this.user = null;
+				this.emit('signOut', this.user);
 			}
 		});
 	}

@@ -5,6 +5,8 @@ import ScrambleChip from './Components/Timer/ScrambleChip';
 import StatsContainer from './Components/Stats/StatsContainer';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import red from '@material-ui/core/colors/red';
+import Typography from '@material-ui/core/Typography';
 import { Scrambow } from 'scrambow';
 import Firebase from './Firebase';
 
@@ -28,14 +30,18 @@ const scrambleLengths = {
 	minx: 70,
 };
 const themes = {
-	default: createMuiTheme({
+	light: createMuiTheme({
 		typography: {
 			useNextVariants: true,
+		},
+		palette: {
+			secondary: red,	
 		},
 	}),
 	dark: createMuiTheme({
 		palette: {
 			type: 'dark',
+			secondary: red,
 		},
 		typography: {
 			useNextVariants: true,
@@ -115,6 +121,17 @@ class App extends Component {
 						<StatsContainer user={this.state.user} fb={this.fb}
 							cube={this.state.cube} session={this.state.session} />
 					</main>
+					<Typography variant="caption" align="center" gutterBottom>
+						Cubeintime uses Google and Firebase for authentication and data storage - these are the only third parties your data will be shared with.
+					    <br/>
+					    <a href="https://policies.google.com/technologies/partner-sites?hl=en-GB&gl=uk">
+					        See how Google processes your data
+					    </a>
+					    <br/>
+					    <a href="https://firebase.google.com/support/privacy/#data_processing_information">
+					        See how Firebase processes your data
+					    </a>
+					</Typography>
 				</div>
 			</MuiThemeProvider>
 		);
