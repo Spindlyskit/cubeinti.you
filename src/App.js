@@ -49,6 +49,8 @@ const themes = {
 	}),
 };
 
+const pageTitle = 'Cube in Time';
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -62,13 +64,16 @@ class App extends Component {
 				theme: 'default',
 			},
 		};
+		
 		this.fb = new Firebase();
 
 		this.fb.on('signIn', u => {
 			this.setState({ user: u });
+			document.title = pageTitle + ' | ' + u.displayName;
 		});
 		this.fb.on('signOut', () => {
 			this.setState({ user: null });
+			document.title = pageTitle;
 		});
 		this.fb.on('settingsChange', s => {
 			this.setState({ settings: s });
