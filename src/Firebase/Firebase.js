@@ -18,7 +18,7 @@ Times should look like this:
  */
 
 const defaultSettings = {
-	theme: 'light',
+	darkTheme: false,
 };
 
 class Firebase extends EventEmitter {
@@ -50,7 +50,7 @@ class Firebase extends EventEmitter {
 							this.db.doc(`users/${this.user.uid}`).set(defaultSettings);
 							return defaultSettings;
 						}
-				});
+					});
 				this.emit('settingsChange', settingsTest);
 			} else {
 				this.user = null;
@@ -71,6 +71,10 @@ class Firebase extends EventEmitter {
 
 	addTime = timeObject => {
 		this.db.collection(`users/${this.user.uid}/times`).add(timeObject);
+	};
+
+	updateSettings = settingsObject => {
+		this.db.doc(`users/${this.user.uid}`).update(settingsObject);
 	};
 
 	addPenalty = (t, p) => {

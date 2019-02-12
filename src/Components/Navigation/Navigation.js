@@ -5,6 +5,7 @@ import CubePicker from './CubePicker';
 import SessionPicker from './SessionPicker';
 import LoginButton from './LoginButton';
 import UserDisplay from './UserDisplay';
+import Settings from './Settings';
 
 // Custom styles for right align and select coloration.
 const styles = {
@@ -42,6 +43,9 @@ function Navigation(props) {
 					</Typography>
 					{
 						props.user ? <UserDisplay user={props.user} fb={props.fb} /> : <LoginButton fb={props.fb}/>
+					}
+					{
+						props.user ? <Settings settings={props.settings} updateSetting={props.updateSetting}/> : null
 					}
 				</Toolbar>
 			</AppBar>
