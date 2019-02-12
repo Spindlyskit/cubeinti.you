@@ -61,7 +61,7 @@ class App extends Component {
 			scramble: null,
 			user: null,
 			settings: {
-				theme: 'default',
+				darkTheme: false,
 			},
 		};
 
@@ -104,16 +104,21 @@ class App extends Component {
 	updateSession = newValue => {
 		this.setState({ session: newValue });
 	};
+	updateSetting = newSetting => {
+		this.setState({ settings: { ...this.state.settings, ...newSetting } });
+		this.fb.updateSettings(newSetting);
+	};
 
 	render() {
 		const { classes } = this.props;
 		return (
-			<MuiThemeProvider theme={themes[this.state.settings.theme]}>
+			<MuiThemeProvider theme={this.state.settings.darkTheme ? themes.dark : themes.light}>
 				<CssBaseline />
 				<div className="App">
 					<Navigation user={this.state.user} fb={this.fb}
 						updateCube={this.updateCube} cube={this.state.cube}
-						updateSession={this.updateSession} session={this.state.session} />
+						updateSession={this.updateSession} session={this.state.session}
+						updateSetting={this.updateSetting} settings={this.state.settings}/>
 					<div className={classes.toolbar} />
 					<main className={classes.main}>
 						<ScrambleChip onClick={this.beginScramble}
@@ -127,8 +132,8 @@ class App extends Component {
 							cube={this.state.cube} session={this.state.session} />
 					</main>
 					<Typography variant="caption" align="center" gutterBottom>
-						Cubeintime uses Google and Firebase for authentication and data storage
-						- these are the only third parties your data will be shared with.
+						Cubeintime uses Google and Firebase for authentication and data
+						storage - these are the only third parties your data will be shared with.
 						<br/>
 						<a href="https://policies.google.com/technologies/partner-sites?hl=en-GB&gl=uk">
 							See how Google processes your data
