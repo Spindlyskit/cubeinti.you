@@ -28,9 +28,9 @@ class Timer extends Component {
 
 	keyDown = e => {
 		if (this.timer) {
-			this.props.beginScramble();
 			this.stop();
 			this.setState({ status: 'didStop' });
+			this.props.beginScramble();
 		}
 		if (e.keyCode !== 32) return;
 		// If the timer is not started in normal then we'll begin to start it again
