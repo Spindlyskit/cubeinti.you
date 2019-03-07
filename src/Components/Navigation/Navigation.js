@@ -45,7 +45,8 @@ function Navigation(props) {
 						props.user ? <UserDisplay user={props.user} fb={props.fb} /> : <LoginButton fb={props.fb}/>
 					}
 					{
-						props.user ? <Settings settings={props.settings} updateSetting={props.updateSetting}/> : null
+						props.user ? <Settings settings={props.settings} updateSetting={props.updateSetting}
+							updateCanTime={props.updateCanTime}/> : null
 					}
 				</Toolbar>
 			</AppBar>

@@ -138,7 +138,7 @@ class App extends Component {
 					<Navigation user={this.state.user} fb={this.fb}
 						updateCube={this.updateCube} cube={this.state.cube}
 						updateSession={this.updateSession} session={this.state.session}
-						updateSetting={this.updateSetting} settings={this.state.settings}/>
+						updateSetting={this.updateSetting} settings={this.state.settings} updateCanTime={this.updateCanTime}/>
 					<div className={classes.toolbar} />
 					<main className={classes.main}>
 						<ScrambleChip onClick={this.beginScramble} setSeed={this.setSeed}

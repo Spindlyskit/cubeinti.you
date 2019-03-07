@@ -25,10 +25,12 @@ class Settings extends Component {
 
 	handleClickOpen = () => {
 		this.setState({ open: true });
+		this.props.updateCanTime(false);
 	};
 
 	handleClose = () => {
 		this.setState({ open: false });
+		this.props.updateCanTime(true);
 	};
 
 	handleSwitchChange = name => event => {
