@@ -10,6 +10,9 @@ const styles = {
 	red: {
 		color: '#F44336',
 	},
+	container: {
+		justifyContent: 'center',
+	},
 };
 
 
@@ -27,22 +30,26 @@ class Timer extends Component {
 	}
 
 	keyDown = e => {
-		if (this.timer) {
-			this.stop();
-			this.setState({ status: 'didStop' });
-			this.props.beginScramble();
-		}
-		if (e.keyCode !== 32) return;
-		// If the timer is not started in normal then we'll begin to start it again
-		if (!this.timer && this.state.status !== 'didStop') {
-			this.setState({ status: 'willStart' });
+		if (this.props.canTime) {
+			if (this.timer) {
+				this.stop();
+				this.setState({ status: 'didStop' });
+				this.props.beginScramble();
+			}
+			if (e.keyCode !== 32) return;
+			// If the timer is not started in normal then we'll begin to start it again
+			if (!this.timer && this.state.status !== 'didStop') {
+				this.setState({ status: 'willStart' });
+			}
 		}
 	};
 
 	keyUp = e => {
-		if (this.timer) return;
-		if (this.state.status === 'didStop') this.setState({ status: 'normal' });
-		else if (this.state.status === 'willStart' && e.keyCode === 32) this.start();
+		if (this.props.canTime) {
+			if (this.timer) return;
+			if (this.state.status === 'didStop') this.setState({ status: 'normal' });
+			else if (this.state.status === 'willStart' && e.keyCode === 32) this.start();
+		}
 	};
 
 	componentDidMount() {
@@ -95,4 +102,3 @@ class Timer extends Component {
 }
 
 export default withStyles(styles, { withTheme: true })(Timer);
-

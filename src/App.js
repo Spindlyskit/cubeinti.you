@@ -9,16 +9,21 @@ import red from '@material-ui/core/colors/red';
 import Typography from '@material-ui/core/Typography';
 import { Scrambow } from 'scrambow';
 import Firebase from './Firebase';
+import SetSeedButton from './Components/Timer/SetSeedButton';
 
 const styles = theme => ({
 	main: {
 		maxWidth: '90%',
 		margin: '0 auto',
 		padding: `${theme.spacing.unit * 11}px 0 ${theme.spacing.unit * 6}px`,
+		textAlign: 'center',
 	},
 	timerContainer: {
 		padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 6}px`,
 		minHeight: 200,
+	},
+	setSeedButtonContainer: {
+		display: 'inline-block',
 	},
 });
 
@@ -60,6 +65,7 @@ class App extends Component {
 			session: 'normal',
 			scramble: null,
 			user: null,
+			canTime: true,
 			settings: {
 				darkTheme: false,
 			},
@@ -80,7 +86,7 @@ class App extends Component {
 		});
 
 		this.worker = null;
-		this.scrambler = new Scrambow();
+		this.scrambler = new Scrambow().setSeed(new Date().getTime());
 	}
 
 	componentDidMount() {
@@ -88,7 +94,7 @@ class App extends Component {
 	}
 
 	beginScramble = () => {
-		this.scrambler.setType(this.state.cube).setSeed(new Date().getTime());
+		this.scrambler.setType(this.state.cube);
 
 		if (scrambleLengths[this.state.cube !== null]) {
 			this.scrambler.setLength(scrambleLengths[this.state.cube]);
@@ -101,12 +107,26 @@ class App extends Component {
 	updateCube = newValue => {
 		this.setState({ cube: newValue, session: 'normal' }, this.beginScramble);
 	};
+
 	updateSession = newValue => {
 		this.setState({ session: newValue });
 	};
+
 	updateSetting = newSetting => {
 		this.setState({ settings: { ...this.state.settings, ...newSetting } });
 		this.fb.updateSettings(newSetting);
+	};
+
+	updateCanTime = e => {
+		this.setState({ canTime: e });
+	};
+
+	setSeed = s => {
+		console.log(s);
+		if (s !== null) {
+			this.scrambler.setSeed(s);
+			this.beginScramble();
+		}
 	};
 
 	render() {
@@ -121,12 +141,15 @@ class App extends Component {
 						updateSetting={this.updateSetting} settings={this.state.settings}/>
 					<div className={classes.toolbar} />
 					<main className={classes.main}>
-						<ScrambleChip onClick={this.beginScramble}
+						<ScrambleChip onClick={this.beginScramble} setSeed={this.setSeed}
 							scramble={this.state.scramble || 'Scrambling...'} />
+						<div className={classes.setSeedButtonContainer}>
+							<SetSeedButton updateCanTime={this.updateCanTime} setSeed={this.setSeed}/>
+						</div>
 						<div className={classes.timerContainer}>
 							<Timer beginScramble={this.beginScramble} scramble={this.state.scramble}
 								cube={this.state.cube} session={this.state.session}
-								user={this.state.user} fb={this.fb} />
+								user={this.state.user} fb={this.fb} canTime={this.state.canTime} />
 						</div>
 						<StatsContainer user={this.state.user} fb={this.fb}
 							cube={this.state.cube} session={this.state.session} />
