@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import CubePicker from './CubePicker';
-import SessionPicker from './SessionPicker';
+import SessionManager from './SessionManager';
 import LoginButton from './LoginButton';
 import UserDisplay from './UserDisplay';
 import Settings from './Settings';
@@ -38,8 +38,11 @@ function Navigation(props) {
 					<Typography variant="h6" color="inherit" className={classes.grow}>
 						<CubePicker classes={classes} cube={props.cube}
 							updateCube={props.updateCube} />
-						<SessionPicker classes={classes} cube={props.cube}
-							session={props.session} updateSession={props.updateSession} />
+						Session: {props.session}
+						<SessionManager updateCanTime={props.updateCanTime} cube={props.cube}
+							session={props.session} updateSession={props.updateSession}
+							addSession={props.addSession} removeSession={props.removeSession}
+							sessionList={props.sessionList} updateSessionList={props.updateSessionList} />
 					</Typography>
 					{
 						props.user ? <UserDisplay user={props.user} fb={props.fb} /> : <LoginButton fb={props.fb}/>

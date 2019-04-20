@@ -24,6 +24,7 @@ class StatsContainer extends Component {
 			this.setState({ times: [], selected: {} });
 			if (this.unsub) {
 				this.unsub();
+				this.unsub = null;
 			}
 		});
 	}
@@ -45,6 +46,7 @@ class StatsContainer extends Component {
 			if ((this.props.user !== prevProps.user) ||
 			(this.props.cube !== prevProps.cube) ||
 			(this.props.session !== prevProps.session)) {
+				if (this.unsub) this.unsub();
 				this.unsub = this.props.fb.db.collection(`users/${this.props.user.uid}/times`)
 					.where('type', '==', this.props.cube)
 					.where('subtype', '==', this.props.session)

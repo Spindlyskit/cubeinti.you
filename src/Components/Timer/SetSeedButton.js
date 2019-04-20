@@ -40,8 +40,8 @@ class SetSeedButton extends React.Component {
 							id="standard-bare"
 							defaultValue=""
 							margin="normal"
-							autocomplete="false"
-							autofocus
+							autoComplete="false"
+							autoFocus
 							onChange={e => { this.setState({ seed: e.target.value }); }}
 							inputRef={el => { this.myTextField = el; }}
 							onClick={() => { this.myTextField.focus(); }}/>

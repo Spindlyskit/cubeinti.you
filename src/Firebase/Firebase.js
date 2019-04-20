@@ -21,6 +21,23 @@ const defaultSettings = {
 	darkTheme: false,
 };
 
+const defaultUserData = {
+	settings: defaultSettings,
+	sessions: {
+		333: ['Default', 'Blindfolded', 'With Feet', 'One-handed'],
+		222: ['Default'],
+		444: ['Default', 'Blindfolded'],
+		555: ['Default', 'Blindfolded'],
+		666: ['Default', 'Blindfolded'],
+		777: ['Default', 'Blindfolded'],
+		clock: ['Default'],
+		minx: ['Default'],
+		pyram: ['Default'],
+		sq1: ['Default'],
+		skewb: ['Default'],
+	},
+};
+
 class Firebase extends EventEmitter {
 	constructor() {
 		super();
@@ -42,16 +59,17 @@ class Firebase extends EventEmitter {
 			if (u !== null) {
 				this.emit('signIn', u);
 				this.user = u;
-				const settingsTest = await this.db.doc(`users/${this.user.uid}`).get()
+				const dataTest = await this.db.doc(`users/${this.user.uid}`).get()
 					.then(data => {
-						if (data.exists) {
+						if (data.exists && data.data().hasOwnProperty('settings') && data.data().hasOwnProperty('sessions')) {
 							return data.data();
 						} else {
-							this.db.doc(`users/${this.user.uid}`).set(defaultSettings);
-							return defaultSettings;
+							this.db.doc(`users/${this.user.uid}`).set(defaultUserData);
+							return defaultUserData;
 						}
 					});
-				this.emit('settingsChange', settingsTest);
+				this.emit('settingsChange', dataTest.settings);
+				this.emit('sessionListChange', dataTest.sessions);
 			} else {
 				this.user = null;
 				this.emit('signOut', this.user);
@@ -74,7 +92,24 @@ class Firebase extends EventEmitter {
 	};
 
 	updateSettings = settingsObject => {
-		this.db.doc(`users/${this.user.uid}`).update(settingsObject);
+		this.db.doc(`users/${this.user.uid}`).update({ settings: settingsObject });
+	};
+
+	addSession = sessionObject => {
+		this.db.doc(`users/${this.user.uid}`).update({ sessions: sessionObject });
+	};
+
+	removeSession = (sessionObject, cube, name) => {
+		this.db.doc(`users/${this.user.uid}`).update({ sessions: sessionObject });
+		this.db.collection(`users/${this.user.uid}/times`)
+			.where('type', '==', cube)
+			.where('subtype', '==', name)
+			.get()
+			.then(querySnapshot => {
+				querySnapshot.forEach(doc => {
+					this.deleteTime(doc.data());
+				});
+			});
 	};
 
 	addPenalty = (t, p) => {

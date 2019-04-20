@@ -62,12 +62,15 @@ class App extends Component {
 		this.state = {
 			// The cube that is currently being scrambled/solved
 			cube: '333',
-			session: 'normal',
+			session: 'Normal (log in for more)',
 			scramble: null,
 			user: null,
 			canTime: true,
 			settings: {
 				darkTheme: false,
+			},
+			sessionList: {
+				333: ['Normal (log in for more)'],
 			},
 		};
 
@@ -83,6 +86,10 @@ class App extends Component {
 		});
 		this.fb.on('settingsChange', s => {
 			this.setState({ settings: s });
+		});
+		this.fb.on('sessionListChange', s => {
+			this.setState({ sessionList: s });
+			this.updateSession(s[this.state.cube][0]);
 		});
 
 		this.worker = null;
@@ -112,6 +119,25 @@ class App extends Component {
 		this.setState({ session: newValue });
 	};
 
+	addSession = name => {
+		if (!this.state.sessionList[this.state.cube].includes(name)) {
+			let newSessionList = { ...this.state.sessionList };
+			newSessionList[this.state.cube] = [...newSessionList[this.state.cube], name];
+			this.setState({ sessionList: newSessionList }, () => this.fb.addSession(this.state.sessionList));
+		}
+	};
+
+	removeSession = name => {
+		let newSessionList = this.state.sessionList;
+		let index = newSessionList[this.state.cube].indexOf(name);
+		newSessionList[this.state.cube].splice(index, 1);
+		this.setState({ sessionList: newSessionList },
+			() => this.fb.removeSession(this.state.sessionList, this.state.cube, name));
+		if (this.state.session === name) {
+			this.setState({ session: this.state.sessionList[this.state.cube][0] });
+		}
+	};
+
 	updateSetting = newSetting => {
 		this.setState({ settings: { ...this.state.settings, ...newSetting } });
 		this.fb.updateSettings(newSetting);
@@ -122,7 +148,6 @@ class App extends Component {
 	};
 
 	setSeed = s => {
-		console.log(s);
 		if (s !== null) {
 			this.scrambler.setSeed(s);
 			this.beginScramble();
@@ -138,7 +163,10 @@ class App extends Component {
 					<Navigation user={this.state.user} fb={this.fb}
 						updateCube={this.updateCube} cube={this.state.cube}
 						updateSession={this.updateSession} session={this.state.session}
-						updateSetting={this.updateSetting} settings={this.state.settings} updateCanTime={this.updateCanTime}/>
+						addSession={this.addSession} removeSession={this.removeSession}
+						updateSessionList={this.updateSessionList} sessionList={this.state.sessionList}
+						updateSetting={this.updateSetting} settings={this.state.settings}
+						updateCanTime={this.updateCanTime}/>
 					<div className={classes.toolbar} />
 					<main className={classes.main}>
 						<ScrambleChip onClick={this.beginScramble} setSeed={this.setSeed}
